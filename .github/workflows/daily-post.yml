@@ -1,1 +1,33 @@
+name: Daily Claude Tip
 
+on:
+  schedule:
+    - cron: '0 8 * * *'
+  workflow_dispatch:
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - run: pip install requests
+
+      - name: Generate post
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python scripts/generate_post.py
+
+      - name: Commit and push
+        run: |
+          git config user.name "Claude Tips Bot"
+          git config user.email "bot@claudetips.dev"
+          git add _posts/
+          git diff --staged --quiet || git commit -m "📝 Daily tip - $(date +'%Y-%m-%d')"
+          git push
