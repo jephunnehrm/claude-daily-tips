@@ -82,7 +82,23 @@ tags = parsed.get('tags', 'claude, ai, tips')
 image_prompt = parsed.get('image_prompt', f'claude ai {topic} purple digital technology')
 
 image_prompt_clean = image_prompt.strip().rstrip('.,;')
-image_url = f"https://gen.pollinations.ai/image/{urllib.parse.quote(image_prompt_clean)}?width=800&height=400&nologo=true"
+pollinations_url = f"https://image.pollinations.ai/prompt/{urllib.parse.quote(image_prompt_clean)}?width=800&height=400&nologo=true"
+
+# Download and save image locally
+image_url = pollinations_url  # fallback to direct URL
+try:
+    img_response = requests.get(pollinations_url, timeout=60)
+    if img_response.status_code == 200:
+        os.makedirs('assets/images', exist_ok=True)
+        img_filename = f"assets/images/{date_str}-{slug}.jpg"
+        with open(img_filename, 'wb') as f:
+            f.write(img_response.content)
+        image_url = f"/claude-daily-tips/assets/images/{date_str}-{slug}.jpg"
+        print(f"✅ Image saved: {img_filename}")
+    else:
+        print(f"⚠️ Image download failed: {img_response.status_code}, using direct URL")
+except Exception as e:
+    print(f"⚠️ Image download error: {e}, using direct URL")
 
 slug = ''.join(c if c.isalnum() or c == '-' else '-' for c in title.lower().replace(' ', '-'))[:50].rstrip('-')
 date_str = today.strftime('%Y-%m-%d')
