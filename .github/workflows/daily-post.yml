@@ -1,5 +1,4 @@
 name: Daily Claude Tip
-
 on:
   schedule:
     - cron: '0 17 * * *'
@@ -17,7 +16,8 @@ jobs:
         with:
           python-version: '3.11'
 
-      - run: pip install requests
+      - name: Install dependencies
+        run: pip install requests
 
       - name: Generate post
         env:
@@ -31,3 +31,10 @@ jobs:
           git add _posts/
           git diff --staged --quiet || git commit -m "📝 Daily tip - $(date +'%Y-%m-%d')"
           git push
+
+      - name: Post summary
+        run: |
+          echo "### ✅ New Claude Tip Published!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Date:** $(date +'%Y-%m-%d')" >> $GITHUB_STEP_SUMMARY
+          echo "**Site:** https://jephunnehrm.github.io/claude-daily-tips" >> $GITHUB_STEP_SUMMARY
