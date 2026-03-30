@@ -30,8 +30,21 @@ TAGS: [3-5 comma separated tags]
 IMAGE_PROMPT: [10-15 word AI image generation prompt, tech/AI themed, no people]
 """
 
-response = requests.post(url, json={"contents": [{"parts": [{"text": prompt}]}]})
-text = response.json()['candidates'][0]['content']['parts'][0]['text'].strip()
+payload = {"contents": [{"parts": [{"text": prompt}]}]}
+
+print("Calling Gemini API...")
+response = requests.post(url, json=payload)
+print(f"Status code: {response.status_code}")
+
+data = response.json()
+print(f"Full response: {data}")
+
+if 'candidates' not in data:
+    error_msg = data.get('error', {}).get('message', str(data))
+    raise Exception(f"Gemini API error: {error_msg}")
+
+text = data['candidates'][0]['content']['parts'][0]['text'].strip()
+print(f"Generated text: {text[:200]}")
 
 # Parse sections
 parsed = {}
@@ -90,4 +103,4 @@ os.makedirs('_posts', exist_ok=True)
 with open(filename, 'w') as f:
     f.write(post)
 
-print(f"✅ Created: {filename}")
+print(f"Created: {filename}")
