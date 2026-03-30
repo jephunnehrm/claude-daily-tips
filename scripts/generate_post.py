@@ -6,13 +6,19 @@ from datetime import datetime
 GEMINI_API_KEY = os.environ['GEMINI_API_KEY']
 
 topics = [
-    "writing better prompts", "Claude Code CLI tips", "system prompt design",
-    "multi-turn conversation tricks", "Claude for debugging code",
-    "Claude for writing and editing", "using Claude artifacts",
-    "Claude API best practices", "agentic workflows with Claude",
-    "Claude for productivity", "advanced prompting techniques",
-    "Claude for data analysis", "Claude memory and context tricks",
-    "Claude for brainstorming", "Claude vs other AI tools"
+    "Claude Code CLI installation and setup", "navigating Claude Code slash commands",
+    "building MCP servers from scratch", "connecting MCP tools to Claude Code",
+    "writing effective CLAUDE.md files", "multi-agent pipelines with Claude Code",
+    "using Claude Code for code reviews", "Claude Code git workflow automation",
+    "debugging faster with Claude Code", "Claude Code context window management",
+    "parallel Claude Code sessions with git worktrees", "Claude Code for refactoring legacy code",
+    "Claude Code sub-agents and orchestration", "MCP server for database querying",
+    "Claude Code for test generation", "using Claude Code hooks",
+    "Claude Code for API integration", "MCP filesystem and shell tools",
+    "Claude Code project scaffolding", "monitoring Claude Code token usage",
+    "Claude Code for .NET and C# development", "MCP tools for Azure DevOps",
+    "Claude Code headless and CI mode", "custom slash commands in Claude Code",
+    "Claude Code for documentation generation"
 ]
 
 today = datetime.now()
@@ -20,14 +26,17 @@ topic = topics[today.timetuple().tm_yday % len(topics)]
 
 url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key={GEMINI_API_KEY}"
 
-prompt = f"""Write a practical daily tip about Claude AI focused on: {topic}.
+prompt = f"""You are an expert Claude Code and MCP (Model Context Protocol) developer advocate.
+Write a practical daily tip for software developers about: {topic}.
+
+The tip should be actionable, specific, and help developers become more proficient with Claude Code and MCP tools in their daily workflow.
 
 Respond in exactly this format with no extra text:
-TITLE: [catchy title, max 60 chars]
-SUMMARY: [one sentence, max 120 chars]
-CONTENT: [3-4 paragraphs in markdown. Include a practical example with code if relevant.]
-TAGS: [3-5 comma separated tags]
-IMAGE_PROMPT: [10-15 word AI image generation prompt, tech/AI themed, no people]
+TITLE: [catchy developer-focused title, max 60 chars]
+SUMMARY: [one sentence showing the developer benefit, max 120 chars]
+CONTENT: [3-4 paragraphs in markdown. Must include at least one real code example, command, or config snippet. Be specific and practical.]
+TAGS: [3-5 comma separated tags from: claude-code, mcp, productivity, cli, agents, dotnet, git, automation, devtools]
+IMAGE_PROMPT: [10-15 word AI image generation prompt, dark tech theme, terminal or code aesthetic, no people]
 """
 
 payload = {"contents": [{"parts": [{"text": prompt}]}]}
