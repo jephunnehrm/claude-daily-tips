@@ -1,1 +1,23 @@
-
+---
+layout: default
+title: Home
+---
+<div class="hero">
+  <h1>🤖 Claude Daily Tips</h1>
+  <p>Fresh Claude AI tips & tricks, automatically generated every day.</p>
+</div>
+<div class="posts">
+  {% for post in site.posts %}
+  <article class="post-card">
+    {% if post.image %}
+    <img src="{{ post.image }}" alt="{{ post.title }}" loading="lazy">
+    {% endif %}
+    <div class="post-card-body">
+      <h2><a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></h2>
+      <p class="date">{{ post.date | date: "%B %d, %Y" }}</p>
+      {% if post.summary %}<p class="summary">{{ post.summary }}</p>{% endif %}
+      <a href="{{ post.url | prepend: site.baseurl }}" class="read-more">Read tip →</a>
+    </div>
+  </article>
+  {% endfor %}
+</div>
