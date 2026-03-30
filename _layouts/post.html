@@ -1,1 +1,28 @@
-
+---
+layout: default
+---
+<article>
+  <header style="margin-bottom:2rem; padding-bottom:1rem; border-bottom:1px solid #2d2d4e;">
+    <h1 style="font-size:2rem; color:#a78bfa; margin-bottom:0.5rem;">{{ page.title }}</h1>
+    <p style="color:#6b7280; font-size:0.85rem;">{{ page.date | date: "%B %d, %Y" }}</p>
+    {% if page.tags %}
+    <div style="margin-top:0.75rem;">
+      {% for tag in page.tags %}
+      <span style="background:#2d2d4e; color:#a78bfa; padding:0.2rem 0.7rem; border-radius:20px; font-size:0.8rem; margin-right:0.4rem;">{{ tag }}</span>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </header>
+  <div style="line-height:1.8;">
+    {{ content }}
+  </div>
+  <a href="{{ site.baseurl }}/" style="display:inline-block; margin-top:2rem;">← Back to all tips</a>
+</article>
+<style>
+  article img { width:100%; border-radius:12px; margin-bottom:1.5rem; }
+  article h2, article h3 { color:#a78bfa; margin:1.5rem 0 0.5rem; }
+  article p { margin-bottom:1rem; color:#d1d5db; }
+  article code { background:#2d2d4e; padding:0.1rem 0.4rem; border-radius:4px; color:#c4b5fd; }
+  article pre { background:#1a1a2e; border:1px solid #2d2d4e; padding:1rem; border-radius:8px; overflow-x:auto; margin:1rem 0; }
+  article pre code { background:none; padding:0; }
+</style>
