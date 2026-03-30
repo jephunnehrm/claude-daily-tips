@@ -72,7 +72,8 @@ content = parsed.get('content', '')
 tags = parsed.get('tags', 'claude, ai, tips')
 image_prompt = parsed.get('image_prompt', f'claude ai {topic} purple digital technology')
 
-image_url = f"https://image.pollinations.ai/prompt/{urllib.parse.quote(image_prompt)}?width=800&height=400&nologo=true"
+image_prompt_clean = image_prompt.strip().rstrip('.,;')
+image_url = f"https://image.pollinations.ai/prompt/{urllib.parse.quote(image_prompt_clean)}?width=800&height=400&nologo=true"
 
 slug = ''.join(c if c.isalnum() or c == '-' else '-' for c in title.lower().replace(' ', '-'))[:50].rstrip('-')
 date_str = today.strftime('%Y-%m-%d')
