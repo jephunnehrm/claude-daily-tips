@@ -4,8 +4,9 @@ title: Home
 ---
 <div class="hero">
   <h1>⚡ Claude Code Daily</h1>
-  <p>Practical Claude Code & MCP tips for developers — auto-generated every day.</p>
+  <p>Claude Code & MCP tips for developers — auto-generated every day.</p>
 </div>
+
 <div class="posts">
   {% for post in site.posts %}
   <article class="post-card">
@@ -13,17 +14,17 @@ title: Home
     <img src="{{ post.image }}" alt="{{ post.title }}" loading="lazy">
     {% endif %}
     <div class="post-card-body">
-      <p class="date">{{ post.date | date: "%B %d, %Y" }}</p>
+      <p class="post-date">{{ post.date | date: "%B %d, %Y" }}</p>
       <h2><a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></h2>
-      {% if post.summary %}<p class="summary">{{ post.summary }}</p>{% endif %}
+      {% if post.summary %}<p class="post-summary">{{ post.summary }}</p>{% endif %}
       {% if post.tags %}
+      <div class="post-tags">
         {% for tag in post.tags limit:3 %}
         <span class="tag">{{ tag }}</span>
         {% endfor %}
-      {% endif %}
-      <div style="margin-top:0.85rem;">
-        <a href="{{ post.url | prepend: site.baseurl }}" class="read-more">Read tip →</a>
       </div>
+      {% endif %}
+      <a href="{{ post.url | prepend: site.baseurl }}" class="read-more">Read tip →</a>
     </div>
   </article>
   {% endfor %}
