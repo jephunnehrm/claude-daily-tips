@@ -18,7 +18,7 @@ topics = [
 today = datetime.now()
 topic = topics[today.timetuple().tm_yday % len(topics)]
 
-url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite-preview-06-17:generateContent?key={GEMINI_API_KEY}"
+url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key={GEMINI_API_KEY}"
 
 prompt = f"""Write a practical daily tip about Claude AI focused on: {topic}.
 
