@@ -3,27 +3,20 @@ layout: default
 title: Home
 ---
 
-<div class="hero">
-  <h1>⚡ Claude Code Daily</h1>
-  <p>Daily tips + weekly deep-dives for developers building with Claude Code, MCP, .NET and Azure AI.</p>
+<!-- Banner image -->
+<div style="border-radius:16px; overflow:hidden; margin-bottom:1.5rem; border:1px solid #2d2a4e;">
+  <img
+    src="{{ site.baseurl }}/assets/images/banner.jpg"
+    alt="Claude Code Daily — Daily Tips & Tricks"
+    style="width:100%; display:block;"
+  >
 </div>
 
-<!-- Nav tabs -->
+<!-- Tab nav -->
 <div style="display:flex; gap:0.5rem; margin-bottom:1.5rem; border-bottom:2px solid #e5e7eb; padding-bottom:0;">
-  <a href="{{ site.baseurl }}/" style="padding:0.5rem 1.25rem; font-size:0.9rem; font-weight:600; color:#7c3aed; border-bottom:2px solid #7c3aed; margin-bottom:-2px;">⚡ Daily Tips</a>
-  <a href="{{ site.baseurl }}/playbook/" style="padding:0.5rem 1.25rem; font-size:0.9rem; font-weight:600; color:#9ca3af;">📚 Playbook</a>
+  <a href="{{ site.baseurl }}/" style="padding:0.5rem 1.25rem; font-size:0.9rem; font-weight:600; color:#7c3aed; border-bottom:2px solid #7c3aed; margin-bottom:-2px; text-decoration:none;">⚡ Daily Tips</a>
+  <a href="{{ site.baseurl }}/playbook/" style="padding:0.5rem 1.25rem; font-size:0.9rem; font-weight:600; color:#9ca3af; text-decoration:none;">📚 Playbook</a>
 </div>
-
-<!-- Latest playbook chapter teaser -->
-{% assign latest_chapter = site.playbook | sort: "date" | reverse | first %}
-{% if latest_chapter %}
-<div style="background:linear-gradient(135deg,#1e1b2e,#2d2a4e); border-radius:12px; padding:1.25rem; margin-bottom:1.5rem; border:1px solid #4c1d95;">
-  <p style="color:#a78bfa; font-size:0.75rem; font-weight:600; margin-bottom:0.3rem;">📚 LATEST PLAYBOOK CHAPTER</p>
-  <h3 style="color:#fff; font-size:1rem; font-weight:600; margin-bottom:0.4rem;">{{ latest_chapter.title }}</h3>
-  <p style="color:#9ca3af; font-size:0.85rem; margin-bottom:0.75rem;">{{ latest_chapter.summary }}</p>
-  <a href="{{ latest_chapter.url | prepend: site.baseurl }}" style="background:#7c3aed; color:white; padding:0.35rem 1rem; border-radius:20px; font-size:0.8rem; font-weight:500; display:inline-block;">Read chapter →</a>
-</div>
-{% endif %}
 
 <!-- Daily tips grid -->
 <div class="posts">
