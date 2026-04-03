@@ -19,25 +19,38 @@ jobs:
 
       - run: pip install requests
 
-      - name: Generate post
+      - name: Generate daily tip
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
           CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
         run: python scripts/generate_post.py
 
+      - name: Generate weekly chapter (Mondays only)
+        if: ${{ github.event_name == 'workflow_dispatch' || github.event_name == 'schedule' }}
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          DAY=$(date +%u)
+          if [ "$DAY" = "1" ] || [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "📚 Monday — generating playbook chapter..."
+            python scripts/generate_chapter.py
+          else
+            echo "⏭️ Not Monday — skipping chapter generation"
+          fi
+
       - name: Commit and push
         run: |
           git config user.name "Claude Tips Bot"
           git config user.email "bot@claudetips.dev"
-          git add _posts/
+          git add _posts/ _playbook/
           [ -d "assets/" ] && git add assets/ || echo "No assets folder yet"
-          git diff --staged --quiet || git commit -m "📝 Daily tip - $(date +'%Y-%m-%d')"
+          git diff --staged --quiet || git commit -m "📝 Daily tip + 📚 chapter - $(date +'%Y-%m-%d')"
           git push
 
       - name: Post summary
         run: |
-          echo "### ✅ New Claude Tip Published!" >> $GITHUB_STEP_SUMMARY
+          echo "### ✅ Content Published!" >> $GITHUB_STEP_SUMMARY
           echo "**Date:** $(date +'%Y-%m-%d')" >> $GITHUB_STEP_SUMMARY
           echo "**Site:** https://jephunnehrm.github.io/claude-daily-tips" >> $GITHUB_STEP_SUMMARY
 
