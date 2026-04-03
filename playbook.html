@@ -1,0 +1,57 @@
+---
+layout: default
+title: Playbook
+---
+
+<div style="margin-bottom:2rem;">
+  <div class="hero" style="margin-bottom:1.5rem;">
+    <h1>📚 The Playbook</h1>
+    <p>Deep-dive chapters on building with Claude Code, MCP, .NET and Azure AI — auto-generated weekly.</p>
+  </div>
+
+  {% assign series_list = site.playbook | map: "series" | uniq %}
+  {% assign series_names = site.playbook | map: "series_name" | uniq %}
+
+  {% for series_id in series_list %}
+    {% assign chapters = site.playbook | where: "series", series_id | sort: "date" | reverse %}
+    {% assign first = chapters | first %}
+
+    <div style="margin-bottom:2rem;">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.75rem; border-bottom:2px solid #ede9fe; padding-bottom:0.5rem;">
+        <h2 style="font-size:1rem; font-weight:700; color:#4c1d95;">{{ first.series_name }}</h2>
+        <span style="font-size:0.75rem; color:#9ca3af;">{{ chapters.size }} chapter{% if chapters.size != 1 %}s{% endif %}</span>
+      </div>
+
+      <div class="posts">
+        {% for chapter in chapters limit:4 %}
+        <article class="post-card">
+          {% if chapter.image %}
+          <img src="{{ chapter.image }}" alt="{{ chapter.title }}" loading="lazy">
+          {% endif %}
+          <div class="post-card-body">
+            <p class="post-date">{{ chapter.date | date: "%B %d, %Y" }}</p>
+            <h2><a href="{{ chapter.url | prepend: site.baseurl }}">{{ chapter.title }}</a></h2>
+            {% if chapter.summary %}<p class="post-summary">{{ chapter.summary }}</p>{% endif %}
+            {% if chapter.tags %}
+            <div class="post-tags">
+              {% for tag in chapter.tags limit:3 %}
+              <span class="tag">{{ tag }}</span>
+              {% endfor %}
+            </div>
+            {% endif %}
+            <a href="{{ chapter.url | prepend: site.baseurl }}" class="read-more">Read chapter →</a>
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+    </div>
+  {% endfor %}
+
+  {% if site.playbook.size == 0 %}
+  <div style="text-align:center; padding:3rem; color:#9ca3af;">
+    <p style="font-size:1.5rem;">📖</p>
+    <p>First playbook chapter drops next Monday!</p>
+  </div>
+  {% endif %}
+
+</div>
