@@ -1,4 +1,5 @@
 import os
+import time
 import requests
 import urllib.parse
 from datetime import datetime
@@ -22,6 +23,15 @@ topics = [
 ]
 
 today = datetime.now()
+date_str = today.strftime('%Y-%m-%d')
+
+# Skip if post for today already exists
+import glob
+existing = glob.glob(f"_posts/{date_str}-*.md")
+if existing:
+    print(f"✅ Post for {date_str} already exists: {existing[0]} — skipping.")
+    exit(0)
+
 topic = topics[today.timetuple().tm_yday % len(topics)]
 
 url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key={GEMINI_API_KEY}"
@@ -78,17 +88,22 @@ if current_key:
 title = parsed.get('title', f'Claude Tip {today.strftime("%B %d")}')
 summary = parsed.get('summary', '')
 content = parsed.get('content', '')
-tags = parsed.get('tags', 'claude, ai, tips')
-image_prompt = parsed.get('image_prompt', f'claude ai {topic} purple digital technology')
+tags = parsed.get('tags', 'claude-code, mcp, productivity')
+image_prompt = parsed.get('image_prompt', f'claude code terminal dark purple digital technology')
 
-image_prompt_clean = image_prompt.strip().rstrip('.,;')
-pollinations_url = f"https://image.pollinations.ai/prompt/{urllib.parse.quote(image_prompt_clean)}?width=800&height=400&nologo=true"
+# ✅ slug and date_str defined BEFORE image block
+slug = ''.join(c if c.isalnum() or c == '-' else '-' for c in title.lower().replace(' ', '-'))[:50].rstrip('-')
+filename = f"_posts/{date_str}-{slug}.md"
 
 # Download and save image locally
-image_url = pollinations_url  # fallback to direct URL
+image_prompt_clean = image_prompt.strip().rstrip('.,;')
+pollinations_url = f"https://image.pollinations.ai/prompt/{urllib.parse.quote(image_prompt_clean)}?width=800&height=400&nologo=true&model=flux"
+image_url = pollinations_url  # fallback
+
 try:
+    print(f"🖼️ Downloading image...")
     img_response = requests.get(pollinations_url, timeout=60)
-    if img_response.status_code == 200:
+    if img_response.status_code == 200 and img_response.headers.get('content-type', '').startswith('image/'):
         os.makedirs('assets/images', exist_ok=True)
         img_filename = f"assets/images/{date_str}-{slug}.jpg"
         with open(img_filename, 'wb') as f:
@@ -99,10 +114,6 @@ try:
         print(f"⚠️ Image download failed: {img_response.status_code}, using direct URL")
 except Exception as e:
     print(f"⚠️ Image download error: {e}, using direct URL")
-
-slug = ''.join(c if c.isalnum() or c == '-' else '-' for c in title.lower().replace(' ', '-'))[:50].rstrip('-')
-date_str = today.strftime('%Y-%m-%d')
-filename = f"_posts/{date_str}-{slug}.md"
 
 tags_yaml = '\n'.join([f'  - {t.strip()}' for t in tags.split(',')])
 
@@ -129,4 +140,4 @@ os.makedirs('_posts', exist_ok=True)
 with open(filename, 'w') as f:
     f.write(post)
 
-print(f"Created: {filename}")
+print(f"✅ Created: {filename}")
