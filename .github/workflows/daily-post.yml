@@ -30,7 +30,8 @@ jobs:
         run: |
           git config user.name "Claude Tips Bot"
           git config user.email "bot@claudetips.dev"
-          git add _posts/ assets/
+          git add _posts/
+          [ -d "assets/" ] && git add assets/ || echo "No assets folder yet"
           git diff --staged --quiet || git commit -m "📝 Daily tip - $(date +'%Y-%m-%d')"
           git push
 
