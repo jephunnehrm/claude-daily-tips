@@ -89,34 +89,6 @@ This project explores:
 
 ---
 
-## 🚀 Roadmap
-
-### Phase 1 — Content Generation
-
-* [x] Generate daily tips
-* [ ] Improve prompt quality
-* [ ] Categorize tips (Beginner → Advanced)
-
-### Phase 2 — Automation
-
-* [ ] Schedule daily generation
-* [ ] Auto-commit via GitHub Actions
-* [ ] Add quality checks
-
-### Phase 3 — Intelligence
-
-* [ ] Avoid duplicate tips
-* [ ] Learn from previous outputs
-* [ ] Improve relevance over time
-
-### Phase 4 — Self-Healing Systems (Vision)
-
-* [ ] Analyze logs using AI
-* [ ] Suggest fixes automatically
-* [ ] Close feedback loop between system + AI
-
----
-
 ## 🛠 Tech Stack
 
 * AI: Claude / LLM APIs
@@ -126,22 +98,6 @@ This project explores:
 
 ---
 
-## 📁 Suggested Structure
-
-```
-/tips
-  2026-04-01.md
-  2026-04-02.md
-
-/playbooks
-  prompt-engineering.md
-
-/experiments
-  prompt-v1.md
-  prompt-v2.md
-```
-
----
 
 ## 🧠 Key Idea
 
