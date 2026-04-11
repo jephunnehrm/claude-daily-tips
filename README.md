@@ -19,6 +19,14 @@ This project focuses on generating **daily tips and playbooks** for using AI in 
 
 ---
 
+## 🌐 Read the Blog
+
+**Visit the live blog:** https://jephunnehrm.github.io/claude-daily-tips/
+
+This is your self-updating blog where daily Claude AI tips & tricks are automatically published through GitHub Pages. Content is generated automatically via GitHub Actions and Gemini AI, and deployed live continuously.
+
+---
+
 ## 🎯 Vision
 
 This is more than a content generator.
@@ -78,7 +86,7 @@ This improves accuracy and reduces hallucinations.
 Most developers:
 
 * Use AI inconsistently
-* Don’t capture learnings
+* Don't capture learnings
 * Repeat the same mistakes
 
 This project explores:
@@ -97,7 +105,6 @@ This project explores:
 * Format: Markdown
 
 ---
-
 
 ## 🧠 Key Idea
 
