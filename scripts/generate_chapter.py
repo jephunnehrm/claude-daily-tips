@@ -109,17 +109,24 @@ prompt = f"""You are a senior software architect and developer advocate speciali
 Write a deep-dive playbook chapter for experienced developers about: {topic}
 This chapter is part of the series: {series_name}
 
+CRITICAL ACCURACY RULES — follow these exactly:
+- The Claude Code CLI command is `claude`. Never use `mcp` as a standalone CLI command.
+- Only reference real Claude Code CLI flags, real MCP SDK APIs, real NuGet package names, and real Azure service names.
+- All code examples must be complete and runnable — no placeholder-only stubs marked "conceptual".
+
 The chapter must:
+- Start with a ## TL;DR section containing 3-5 bullet points summarising what the reader will learn
 - Be practical AND architectural — show both how to use it and how to design systems around it
-- Include real code examples, config snippets, or CLI commands
+- Include real code examples, config snippets, or CLI commands that actually work
+- Include a ## Anti-patterns section showing 2-3 things developers commonly get wrong and why
 - Cover common pitfalls and how to avoid them
-- Be 1000-1500 words in markdown
-- Feel like a senior engineer wrote it, not a tutorial blog
+- Be 1200-1600 words in markdown with ## subheadings and code blocks
+- Feel like a senior engineer wrote it, not a tutorial blog post
 
 Respond in exactly this format with no extra text:
 TITLE: [clear chapter title, max 70 chars]
 SUMMARY: [2 sentences describing what the reader will learn]
-CONTENT: [full chapter content in markdown with ## subheadings, code blocks, and practical examples]
+CONTENT: [full chapter content in markdown with ## subheadings, code blocks, TL;DR, and Anti-patterns sections]
 TAGS: [4-6 comma separated tags from: claude-code, mcp, dotnet, azure, agents, architecture, devtools, productivity, git, automation, csharp, openai, rag, identity]
 IMAGE_PROMPT: [10-15 word AI image generation prompt, dark tech theme, architectural diagram aesthetic, no people]
 """
