@@ -36,15 +36,27 @@ topic = topics[today.timetuple().tm_yday % len(topics)]
 
 url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key={GEMINI_API_KEY}"
 
-prompt = f"""You are an expert Claude Code and MCP (Model Context Protocol) developer advocate.
+prompt = f"""You are an expert Claude Code and MCP (Model Context Protocol) developer advocate with deep hands-on experience.
 Write a practical daily tip for software developers about: {topic}.
 
-The tip should be actionable, specific, and help developers become more proficient with Claude Code and MCP tools in their daily workflow.
+CRITICAL ACCURACY RULES — follow these exactly:
+- The Claude Code CLI command is `claude`. Never use `mcp` as a standalone CLI command.
+- Hooks are configured in `.claude/settings.json` under a `hooks` key.
+- Slash commands use the `/command` syntax inside a Claude Code session.
+- Only reference real, documented Claude Code features, real CLI flags, and real config keys.
+- If unsure whether a flag, env var, or API exists, do not include it — omit or describe the concept instead.
+- Code examples must be complete and copy-pasteable, not illustrative stubs.
+
+The tip must:
+- Open with a real developer pain point or workflow moment (not "Claude Code lets you...")
+- Include one complete, copy-pasteable code block, config snippet, or CLI command sequence that actually works
+- Include a "**Try it:**" line with one concrete action the reader can take right now
+- Be 4-5 substantial paragraphs — enough to actually teach the concept, not just tease it
 
 Respond in exactly this format with no extra text:
 TITLE: [catchy developer-focused title, max 60 chars]
 SUMMARY: [one sentence showing the developer benefit, max 120 chars]
-CONTENT: [3-4 paragraphs in markdown. Must include at least one real code example, command, or config snippet. Be specific and practical.]
+CONTENT: [4-5 paragraphs in markdown as described above, with code block and Try it line]
 TAGS: [3-5 comma separated tags from: claude-code, mcp, productivity, cli, agents, dotnet, git, automation, devtools]
 IMAGE_PROMPT: [10-15 word AI image generation prompt, dark tech theme, terminal or code aesthetic, no people]
 """
