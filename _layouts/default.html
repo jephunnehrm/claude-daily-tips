@@ -134,6 +134,39 @@
     }
     .read-more:hover { background: var(--purple-dark); }
 
+    /* TAB NAV */
+    .tab-nav {
+      display: flex;
+      gap: 0.25rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 2px solid var(--border);
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding-bottom: 0;
+    }
+    .tab-nav::-webkit-scrollbar { display: none; }
+    .tab {
+      padding: 0.5rem 1rem;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-decoration: none !important;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      transition: color 0.15s;
+      flex-shrink: 0;
+    }
+    .tab:hover { color: var(--purple); }
+    .tab.active {
+      color: var(--purple);
+      border-bottom-color: var(--purple);
+    }
+
+    /* TAG LINKS */
+    a.tag { color: var(--purple); }
+    a.tag:hover { background: #c4b5fd; color: var(--purple-dark); }
+
     /* FOOTER */
     .site-footer {
       text-align: center;

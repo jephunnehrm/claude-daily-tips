@@ -13,10 +13,13 @@ title: Home
 </div>
 
 <!-- Tab nav -->
-<div style="display:flex; gap:0.5rem; margin-bottom:1.5rem; border-bottom:2px solid #e5e7eb; padding-bottom:0;">
-  <a href="{{ site.baseurl }}/" style="padding:0.5rem 1.25rem; font-size:0.9rem; font-weight:600; color:#7c3aed; border-bottom:2px solid #7c3aed; margin-bottom:-2px; text-decoration:none;">⚡ Daily Tips</a>
-  <a href="{{ site.baseurl }}/playbook/" style="padding:0.5rem 1.25rem; font-size:0.9rem; font-weight:600; color:#9ca3af; text-decoration:none;">📚 Playbook</a>
-</div>
+<nav class="tab-nav">
+  <a href="{{ site.baseurl }}/" class="tab active">⚡ Daily Tips</a>
+  <a href="{{ site.baseurl }}/playbook/" class="tab">📚 Playbook</a>
+  <a href="{{ site.baseurl }}/dotnet/" class="tab">🔷 .NET</a>
+  <a href="{{ site.baseurl }}/java/" class="tab">☕ Java</a>
+  <a href="{{ site.baseurl }}/tags/" class="tab">🏷️ Tags</a>
+</nav>
 
 <!-- Daily tips grid -->
 <div class="posts">
@@ -32,7 +35,7 @@ title: Home
       {% if post.tags %}
       <div class="post-tags">
         {% for tag in post.tags limit:3 %}
-        <span class="tag">{{ tag }}</span>
+        <a href="{{ site.baseurl }}/tags/#{{ tag }}" class="tag">{{ tag }}</a>
         {% endfor %}
       </div>
       {% endif %}
