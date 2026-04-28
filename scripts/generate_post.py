@@ -1,10 +1,16 @@
 import os
 import time
+import glob
 import requests
 import urllib.parse
 from datetime import datetime
 
 GEMINI_API_KEY = os.environ['GEMINI_API_KEY']
+
+ALLOWED_TAGS = {
+    'claude-code', 'mcp', 'productivity', 'cli', 'agents',
+    'dotnet', 'git', 'automation', 'devtools', 'java', 'spring', 'junit',
+}
 
 topics = [
     "Claude Code CLI installation and setup", "navigating Claude Code slash commands",
@@ -19,14 +25,16 @@ topics = [
     "Claude Code project scaffolding", "monitoring Claude Code token usage",
     "Claude Code for .NET and C# development", "MCP tools for Azure DevOps",
     "Claude Code headless and CI mode", "custom slash commands in Claude Code",
-    "Claude Code for documentation generation"
+    "Claude Code for documentation generation",
+    "Claude Code for Spring Boot development",
+    "generating JUnit 5 tests with Claude Code",
+    "refactoring Java microservices with Claude Code",
+    "Claude Code for Gradle and Maven workflows",
 ]
 
 today = datetime.now()
 date_str = today.strftime('%Y-%m-%d')
 
-# Skip if post for today already exists
-import glob
 existing = glob.glob(f"_posts/{date_str}-*.md")
 if existing:
     print(f"✅ Post for {date_str} already exists: {existing[0]} — skipping.")
@@ -57,63 +65,95 @@ Respond in exactly this format with no extra text:
 TITLE: [catchy developer-focused title, max 60 chars]
 SUMMARY: [one sentence showing the developer benefit, max 120 chars]
 CONTENT: [4-5 paragraphs in markdown as described above, with code block and Try it line]
-TAGS: [3-5 comma separated tags from: claude-code, mcp, productivity, cli, agents, dotnet, git, automation, devtools]
+TAGS: [3-5 comma separated tags from: claude-code, mcp, productivity, cli, agents, dotnet, git, automation, devtools, java, spring, junit]
 IMAGE_PROMPT: [10-15 word AI image generation prompt, dark tech theme, terminal or code aesthetic, no people]
 """
 
-payload = {"contents": [{"parts": [{"text": prompt}]}]}
 
-print("Calling Gemini API...")
-response = requests.post(url, json=payload)
-print(f"Status code: {response.status_code}")
-
-data = response.json()
-print(f"Full response: {data}")
-
-if 'candidates' not in data:
-    error_msg = data.get('error', {}).get('message', str(data))
-    raise Exception(f"Gemini API error: {error_msg}")
-
-text = data['candidates'][0]['content']['parts'][0]['text'].strip()
-print(f"Generated text: {text[:200]}")
-
-# Parse sections
-parsed = {}
-current_key = None
-current_lines = []
-
-for line in text.split('\n'):
-    for key in ['TITLE', 'SUMMARY', 'CONTENT', 'TAGS', 'IMAGE_PROMPT']:
-        if line.startswith(f'{key}:'):
+def parse_response(text):
+    parsed = {}
+    current_key = None
+    current_lines = []
+    for line in text.split('\n'):
+        for key in ['TITLE', 'SUMMARY', 'CONTENT', 'TAGS', 'IMAGE_PROMPT']:
+            if line.startswith(f'{key}:'):
+                if current_key:
+                    parsed[current_key] = '\n'.join(current_lines).strip()
+                current_key = key.lower()
+                current_lines = [line[len(key)+1:].strip()]
+                break
+        else:
             if current_key:
-                parsed[current_key] = '\n'.join(current_lines).strip()
-            current_key = key.lower()
-            current_lines = [line[len(key)+1:].strip()]
-            break
-    else:
-        if current_key:
-            current_lines.append(line)
+                current_lines.append(line)
+    if current_key:
+        parsed[current_key] = '\n'.join(current_lines).strip()
+    return parsed
 
-if current_key:
-    parsed[current_key] = '\n'.join(current_lines).strip()
+
+def validate_parsed(parsed):
+    for key in ['title', 'summary', 'content', 'tags']:
+        if not parsed.get(key, '').strip():
+            return False, f"missing required field: {key}"
+    word_count = len(parsed['content'].split())
+    if word_count < 150:
+        return False, f"content too short ({word_count} words, need 150+)"
+    return True, None
+
+
+def normalize_tags(raw_tags):
+    tags = [t.strip().lower() for t in raw_tags.split(',')]
+    valid = [t for t in tags if t in ALLOWED_TAGS]
+    return valid if valid else ['claude-code']
+
+
+MAX_RETRIES = 3
+parsed = {}
+
+for attempt in range(MAX_RETRIES):
+    print(f"Calling Gemini API (attempt {attempt + 1}/{MAX_RETRIES})...")
+    response = requests.post(url, json={"contents": [{"parts": [{"text": prompt}]}]})
+    print(f"Status: {response.status_code}")
+    data = response.json()
+
+    if 'candidates' not in data:
+        error_msg = data.get('error', {}).get('message', str(data))
+        if attempt < MAX_RETRIES - 1:
+            print(f"API error, retrying: {error_msg}")
+            time.sleep(5)
+            continue
+        raise Exception(f"Gemini API error: {error_msg}")
+
+    text = data['candidates'][0]['content']['parts'][0]['text'].strip()
+    print(f"Generated text preview: {text[:200]}")
+    parsed = parse_response(text)
+    valid, error = validate_parsed(parsed)
+
+    if valid:
+        print("✅ Validation passed")
+        break
+
+    if attempt < MAX_RETRIES - 1:
+        print(f"⚠️ Validation failed ({error}), retrying...")
+        time.sleep(3)
+    else:
+        raise Exception(f"Failed to generate valid content after {MAX_RETRIES} attempts: {error}")
+
 
 title = parsed.get('title', f'Claude Tip {today.strftime("%B %d")}')
 summary = parsed.get('summary', '')
 content = parsed.get('content', '')
-tags = parsed.get('tags', 'claude-code, mcp, productivity')
-image_prompt = parsed.get('image_prompt', f'claude code terminal dark purple digital technology')
+tags_list = normalize_tags(parsed.get('tags', 'claude-code'))
+image_prompt = parsed.get('image_prompt', 'claude code terminal dark purple digital technology')
 
-# ✅ slug and date_str defined BEFORE image block
 slug = ''.join(c if c.isalnum() or c == '-' else '-' for c in title.lower().replace(' ', '-'))[:50].rstrip('-')
 filename = f"_posts/{date_str}-{slug}.md"
 
-# Download and save image locally
 image_prompt_clean = image_prompt.strip().rstrip('.,;')
 pollinations_url = f"https://image.pollinations.ai/prompt/{urllib.parse.quote(image_prompt_clean)}?width=800&height=400&nologo=true&model=flux"
-image_url = pollinations_url  # fallback
+image_url = pollinations_url
 
 try:
-    print(f"🖼️ Downloading image...")
+    print("🖼️ Downloading image...")
     img_response = requests.get(pollinations_url, timeout=60)
     if img_response.status_code == 200 and img_response.headers.get('content-type', '').startswith('image/'):
         os.makedirs('assets/images', exist_ok=True)
@@ -127,7 +167,7 @@ try:
 except Exception as e:
     print(f"⚠️ Image download error: {e}, using direct URL")
 
-tags_yaml = '\n'.join([f'  - {t.strip()}' for t in tags.split(',')])
+tags_yaml = '\n'.join([f'  - {t}' for t in tags_list])
 
 post = f"""---
 layout: post
