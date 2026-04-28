@@ -30,26 +30,9 @@ permalink: /playbook/
     <span style="font-size:0.75rem; color:#9ca3af;">{{ chapters.size }} chapter{% if chapters.size != 1 %}s{% endif %}</span>
   </div>
 
-  <div class="posts">
+  <div class="posts" data-paginate="12">
     {% for chapter in chapters %}
-    <article class="post-card">
-      {% if chapter.image %}
-      <img src="{{ chapter.image }}" alt="{{ chapter.title }}" loading="lazy">
-      {% endif %}
-      <div class="post-card-body">
-        <p class="post-date">{{ chapter.date | date: "%B %d, %Y" }}</p>
-        <h2><a href="{{ chapter.url | prepend: site.baseurl }}">{{ chapter.title }}</a></h2>
-        {% if chapter.summary %}<p class="post-summary">{{ chapter.summary }}</p>{% endif %}
-        {% if chapter.tags %}
-        <div class="post-tags">
-          {% for tag in chapter.tags limit:3 %}
-          <a href="{{ site.baseurl }}/tags/#{{ tag }}" class="tag">{{ tag }}</a>
-          {% endfor %}
-        </div>
-        {% endif %}
-        <a href="{{ chapter.url | prepend: site.baseurl }}" class="read-more">Read chapter →</a>
-      </div>
-    </article>
+    {% include chapter-card.html chapter=chapter %}
     {% endfor %}
   </div>
 </div>

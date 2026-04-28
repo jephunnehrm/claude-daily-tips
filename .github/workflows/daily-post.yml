@@ -26,6 +26,16 @@ jobs:
           CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
         run: python scripts/generate_post.py
 
+      - name: Generate daily .NET tip
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python scripts/generate_dotnet_post.py
+
+      - name: Generate daily Java tip
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python scripts/generate_java_post.py
+
       - name: Generate weekly chapter (Mondays only)
         if: ${{ github.event_name == 'workflow_dispatch' || github.event_name == 'schedule' }}
         env:

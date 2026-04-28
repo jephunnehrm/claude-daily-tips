@@ -82,44 +82,10 @@ permalink: /tags/
   {% else %}
   <div class="posts">
     {% for post in tag_posts %}
-    <article class="post-card">
-      {% if post.image %}
-      <img src="{{ post.image }}" alt="{{ post.title }}" loading="lazy">
-      {% endif %}
-      <div class="post-card-body">
-        <p class="post-date">{{ post.date | date: "%B %d, %Y" }} &middot; Daily Tip</p>
-        <h2><a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></h2>
-        {% if post.summary %}<p class="post-summary">{{ post.summary }}</p>{% endif %}
-        {% if post.tags %}
-        <div class="post-tags">
-          {% for t in post.tags limit:3 %}
-          <a href="{{ site.baseurl }}/tags/#{{ t }}" class="tag">{{ t }}</a>
-          {% endfor %}
-        </div>
-        {% endif %}
-        <a href="{{ post.url | prepend: site.baseurl }}" class="read-more">Read tip →</a>
-      </div>
-    </article>
+    {% include post-card.html post=post %}
     {% endfor %}
     {% for chapter in tag_chapters %}
-    <article class="post-card">
-      {% if chapter.image %}
-      <img src="{{ chapter.image }}" alt="{{ chapter.title }}" loading="lazy">
-      {% endif %}
-      <div class="post-card-body">
-        <p class="post-date">{{ chapter.date | date: "%B %d, %Y" }} &middot; Playbook</p>
-        <h2><a href="{{ chapter.url | prepend: site.baseurl }}">{{ chapter.title }}</a></h2>
-        {% if chapter.summary %}<p class="post-summary">{{ chapter.summary }}</p>{% endif %}
-        {% if chapter.tags %}
-        <div class="post-tags">
-          {% for t in chapter.tags limit:3 %}
-          <a href="{{ site.baseurl }}/tags/#{{ t }}" class="tag">{{ t }}</a>
-          {% endfor %}
-        </div>
-        {% endif %}
-        <a href="{{ chapter.url | prepend: site.baseurl }}" class="read-more">Read chapter →</a>
-      </div>
-    </article>
+    {% include chapter-card.html chapter=chapter %}
     {% endfor %}
   </div>
   {% endif %}
