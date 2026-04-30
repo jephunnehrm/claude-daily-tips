@@ -167,6 +167,52 @@
     a.tag { color: var(--purple); }
     a.tag:hover { background: #c4b5fd; color: var(--purple-dark); }
 
+    /* NEW BADGE */
+    .post-card { position: relative; }
+    .new-badge {
+      position: absolute;
+      top: 0.6rem;
+      right: 0.6rem;
+      background: #10b981;
+      color: #fff;
+      padding: 0.15rem 0.5rem;
+      border-radius: 20px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    /* CARD FOOTER + VIEWED BADGE */
+    .card-footer { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
+    .viewed-badge { font-size: 0.72rem; color: #9ca3af; font-weight: 500; }
+
+    /* PAGINATION */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.35rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .pagination-btn {
+      background: var(--white);
+      border: 1px solid var(--border);
+      color: var(--purple);
+      padding: 0.4rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: inherit;
+    }
+    .pagination-btn:hover:not(:disabled) { background: var(--purple-light); border-color: var(--purple); }
+    .pagination-btn:disabled { color: #d1d5db; border-color: #f3f4f6; cursor: default; }
+    .pagination-btn.active { background: var(--purple); color: #fff; border-color: var(--purple); }
+
     /* FOOTER */
     .site-footer {
       text-align: center;
@@ -186,6 +232,92 @@
     </div>
   </header>
   <main class="site-main">{{ content }}</main>
+
+  <script>
+  (function () {
+    'use strict';
+    var VIEWED_KEY = 'ccd_viewed';
+
+    function getViewed() {
+      try { return JSON.parse(localStorage.getItem(VIEWED_KEY) || '[]'); } catch (e) { return []; }
+    }
+    function markViewed(url) {
+      var v = getViewed();
+      if (v.indexOf(url) === -1) {
+        v.push(url);
+        try { localStorage.setItem(VIEWED_KEY, JSON.stringify(v)); } catch (e) {}
+      }
+    }
+
+    // Mark detail page as viewed immediately
+    var detailEl = document.querySelector('[data-post-url]');
+    if (detailEl) markViewed(detailEl.dataset.postUrl);
+
+    function updateCardStates() {
+      var viewed = getViewed();
+      var cutoff = new Date(Date.now() - 3 * 24 * 60 * 60 * 1000);
+      document.querySelectorAll('.post-card[data-url]').forEach(function (card) {
+        var isViewed = viewed.indexOf(card.dataset.url) !== -1;
+        var isNew = new Date(card.dataset.date) >= cutoff;
+        var nb = card.querySelector('.new-badge');
+        var vb = card.querySelector('.viewed-badge');
+        if (nb) nb.style.display = (!isViewed && isNew) ? '' : 'none';
+        if (vb) vb.style.display = isViewed ? '' : 'none';
+      });
+    }
+
+    function initPagination(grid) {
+      var perPage = parseInt(grid.dataset.paginate, 10) || 12;
+      var cards = Array.from(grid.querySelectorAll(':scope > .post-card'));
+      if (cards.length <= perPage) return;
+      var page = 1;
+      var total = Math.ceil(cards.length / perPage);
+      if (!grid.id) grid.id = 'pg-' + Math.random().toString(36).slice(2);
+
+      function show(n) {
+        page = Math.min(Math.max(n, 1), total);
+        var s = (page - 1) * perPage;
+        cards.forEach(function (c, i) { c.style.display = (i >= s && i < s + perPage) ? '' : 'none'; });
+        renderNav();
+        var top = grid.getBoundingClientRect().top + window.scrollY - 120;
+        window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+      }
+
+      function renderNav() {
+        var old = document.querySelector('.pagination[data-for="' + grid.id + '"]');
+        if (old) old.remove();
+        var nav = document.createElement('nav');
+        nav.className = 'pagination';
+        nav.setAttribute('data-for', grid.id);
+
+        function btn(label, disabled, active, onclick) {
+          var b = document.createElement('button');
+          b.className = 'pagination-btn' + (active ? ' active' : '');
+          b.textContent = label;
+          b.disabled = disabled;
+          if (onclick) b.onclick = onclick;
+          return b;
+        }
+
+        nav.appendChild(btn('← Prev', page === 1, false, function () { show(page - 1); }));
+        var s = Math.max(1, Math.min(page - 2, total - 4));
+        var e = Math.min(total, s + 4);
+        for (var p = s; p <= e; p++) {
+          (function (pg) { nav.appendChild(btn(pg, false, pg === page, function () { show(pg); })); })(p);
+        }
+        nav.appendChild(btn('Next →', page === total, false, function () { show(page + 1); }));
+        grid.insertAdjacentElement('afterend', nav);
+      }
+
+      show(1);
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('.posts[data-paginate]').forEach(initPagination);
+      updateCardStates();
+    });
+  })();
+  </script>
   
   <footer class="site-footer">
   AI-generated content · Pipeline built by Jepoy · Jekyll & GitHub Pages<br>

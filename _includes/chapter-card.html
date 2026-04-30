@@ -1,0 +1,22 @@
+<article class="post-card" data-url="{{ include.chapter.url | prepend: site.baseurl }}" data-date="{{ include.chapter.date | date: '%Y-%m-%d' }}">
+  <span class="new-badge" style="display:none;">✨ New</span>
+  {% if include.chapter.image %}
+  <img src="{{ include.chapter.image }}" alt="{{ include.chapter.title }}" loading="lazy">
+  {% endif %}
+  <div class="post-card-body">
+    <p class="post-date">{{ include.chapter.date | date: "%B %d, %Y" }}</p>
+    <h2><a href="{{ include.chapter.url | prepend: site.baseurl }}">{{ include.chapter.title }}</a></h2>
+    {% if include.chapter.summary %}<p class="post-summary">{{ include.chapter.summary }}</p>{% endif %}
+    {% if include.chapter.tags %}
+    <div class="post-tags">
+      {% for tag in include.chapter.tags limit:3 %}
+      <a href="{{ site.baseurl }}/tags/#{{ tag }}" class="tag">{{ tag }}</a>
+      {% endfor %}
+    </div>
+    {% endif %}
+    <div class="card-footer">
+      <a href="{{ include.chapter.url | prepend: site.baseurl }}" class="read-more">Read chapter →</a>
+      <span class="viewed-badge" style="display:none;">✓ Read</span>
+    </div>
+  </div>
+</article>

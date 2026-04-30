@@ -1,0 +1,22 @@
+<article class="post-card" data-url="{{ include.post.url | prepend: site.baseurl }}" data-date="{{ include.post.date | date: '%Y-%m-%d' }}">
+  <span class="new-badge" style="display:none;">✨ New</span>
+  {% if include.post.image %}
+  <img src="{{ include.post.image }}" alt="{{ include.post.title }}" loading="lazy">
+  {% endif %}
+  <div class="post-card-body">
+    <p class="post-date">{{ include.post.date | date: "%B %d, %Y" }}</p>
+    <h2><a href="{{ include.post.url | prepend: site.baseurl }}">{{ include.post.title }}</a></h2>
+    {% if include.post.summary %}<p class="post-summary">{{ include.post.summary }}</p>{% endif %}
+    {% if include.post.tags %}
+    <div class="post-tags">
+      {% for tag in include.post.tags limit:3 %}
+      <a href="{{ site.baseurl }}/tags/#{{ tag }}" class="tag">{{ tag }}</a>
+      {% endfor %}
+    </div>
+    {% endif %}
+    <div class="card-footer">
+      <a href="{{ include.post.url | prepend: site.baseurl }}" class="read-more">Read tip →</a>
+      <span class="viewed-badge" style="display:none;">✓ Read</span>
+    </div>
+  </div>
+</article>
