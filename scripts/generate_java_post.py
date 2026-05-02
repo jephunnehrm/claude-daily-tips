@@ -4,6 +4,7 @@ import glob
 import requests
 import urllib.parse
 from datetime import datetime
+from image_utils import download_and_save_image
 
 GEMINI_API_KEY = os.environ['GEMINI_API_KEY']
 
@@ -152,24 +153,11 @@ image_prompt = parsed.get('image_prompt', 'dark Java Spring Boot code terminal g
 slug = ''.join(c if c.isalnum() or c == '-' else '-' for c in title.lower().replace(' ', '-'))[:50].rstrip('-')
 filename = f"_posts/java/{date_str}-{slug}.md"
 
-image_prompt_clean = image_prompt.strip().rstrip('.,;')
-pollinations_url = f"https://image.pollinations.ai/prompt/{urllib.parse.quote(image_prompt_clean)}?width=800&height=400&nologo=true&model=flux"
-image_url = pollinations_url
-
 try:
-    print("🖼️ Downloading image...")
-    img_response = requests.get(pollinations_url, timeout=60)
-    if img_response.status_code == 200 and img_response.headers.get('content-type', '').startswith('image/'):
-        os.makedirs('assets/images', exist_ok=True)
-        img_filename = f"assets/images/java-{date_str}-{slug}.jpg"
-        with open(img_filename, 'wb') as f:
-            f.write(img_response.content)
-        image_url = f"/claude-daily-tips/assets/images/java-{date_str}-{slug}.jpg"
-        print(f"✅ Image saved: {img_filename}")
-    else:
-        print(f"⚠️ Image download failed: {img_response.status_code}, using direct URL")
+    image_url = download_and_save_image(image_prompt, 'java', date_str, slug)
 except Exception as e:
-    print(f"⚠️ Image download error: {e}, using direct URL")
+    print(f"❌ Critical error: Could not download image: {e}")
+    raise
 
 tags_yaml = '\n'.join([f'  - {t}' for t in tags_list])
 
