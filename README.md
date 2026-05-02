@@ -42,23 +42,53 @@ The long-term goal is to evolve into:
 
 ## ⚙️ How It Works
 
-1. **Prompt Design**
+1. **Multi-Language Generation**
 
-   * Structured prompts guide AI to produce actionable tips
+   * Python (general tips and workflows)
+   * .NET/C# (ASP.NET Core, Blazor, EF Core, etc.)
+   * Java (Spring Boot, concurrent programming, design patterns, etc.)
 
 2. **Content Generation**
 
-   * AI generates daily insights based on best practices
+   * Daily tips tailored to each language/framework
+   * Playbooks - structured educational guides for complex workflows
+   * AI-generated hero images for visual engagement
 
-3. **Formatting**
+3. **Smart Formatting**
 
-   * Output is stored as structured Markdown
+   * Markdown with frontmatter metadata
+   * Hashtags for discoverability
+   * Language-specific tabs for code examples
+   * Image rendering with Pollinations AI
 
-4. **(Future) Automation**
+4. **Automation**
 
-   * Scheduled generation (daily)
-   * Auto-commit using GitHub Actions
-   * CI/CD integration
+   * Scheduled daily generation via GitHub Actions
+   * Auto-commit and deployment to GitHub Pages
+   * Multi-language pipeline execution
+   * Article badges (new/viewed tracking)
+
+---
+
+## 🎨 What We Generate
+
+### Daily Tips
+Language-specific daily tips with code examples, best practices, and AI workflows.
+
+**Supported Languages & Frameworks:**
+- **Python**: General development, automation, data processing
+- **.NET/C#**: ASP.NET Core, Blazor, Entity Framework Core, Polly, SignalR, MAUI
+- **Java**: Spring Boot, concurrent programming, design patterns, microservices
+
+### Playbooks
+In-depth, educational guides for complex development workflows and patterns.
+
+### Content Features
+✅ AI-generated hero images (800x400px)  
+✅ Language-specific code tabs  
+✅ Hashtag-based search & discovery  
+✅ Article badges (new/viewed tracking)  
+✅ Responsive Markdown formatting  
 
 ---
 
@@ -99,10 +129,12 @@ This project explores:
 
 ## 🛠 Tech Stack
 
-* AI: Claude / LLM APIs
-* Backend (planned): .NET / Python
-* Automation (planned): GitHub Actions
-* Format: Markdown
+* **AI & Generation**: Claude API / Gemini API
+* **Languages Supported**: Python, .NET/C#, Java
+* **Image Generation**: Pollinations AI (Flux model)
+* **Automation**: GitHub Actions (daily scheduled generation)
+* **Deployment**: GitHub Pages (static site)
+* **Format**: Markdown with YAML frontmatter
 
 ---
 
@@ -114,7 +146,12 @@ This project explores:
 
 ## 👀 Status
 
-🚧 Active experiment — continuously evolving
+✅ **Active & Generating**
+- Daily tips for Python, .NET, and Java (live at https://jephunnehrm.github.io/claude-daily-tips/)
+- Playbooks/chapters covering common workflows
+- AI-generated images for all articles
+- Language-specific tabs & search functionality
+- New article badges & read tracking
 
 ---
 
