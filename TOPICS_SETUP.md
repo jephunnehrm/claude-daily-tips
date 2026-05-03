@@ -5,10 +5,12 @@ This guide explains how to prepare and schedule topics for daily post generation
 ## Overview
 
 The post generation system now supports:
-- **Scheduled topics**: Pre-plan specific topics for specific dates
+- **Scheduled daily posts** (general, .NET, Java): Pre-plan specific topics for specific dates
+- **Scheduled playbook chapters**: Plan weekly architecture deep-dives by series
 - **Auto-generation**: Randomly select from available topics when no schedule exists
-- **Uniqueness tracking**: Prevents topic repetition across generations
+- **Uniqueness tracking**: Prevents topic repetition across generations per track
 - **Manual control**: Edit `topics.json` to add/modify topics anytime
+- **Three independent tracks**: General posts, .NET tips, Java tips (each with own scheduling)
 
 ## File Structure
 
@@ -43,8 +45,23 @@ The post generation system now supports:
 
 ## How to Use
 
-### 0. Available Playbook Series
+### 0. Available Topic Categories
 
+#### Daily Posts (General)
+- General Claude Code and MCP tips (~30 topics)
+- Edit `available_topics` to add/remove topics
+
+#### .NET Posts
+- ASP.NET Core, EF Core, Clean Architecture, Blazor, MAUI, etc.
+- 20 .NET-specific topics in `dotnet_available_topics`
+- Generates in `_posts/dotnet/`
+
+#### Java Posts
+- Spring Boot, JUnit 5, Gradle, Maven, microservices, etc.
+- 20 Java-specific topics in `java_available_topics`
+- Generates in `_posts/java/`
+
+#### Playbook Series (Weekly)
 The playbook has these series available:
 - `foundations` - Claude Code Foundations (6 topics)
 - `mcp-deep-dive` - MCP Deep Dive (6 topics)
@@ -134,7 +151,53 @@ Output: Warns "All topics used, resetting for new cycle"
         Picks a random topic from all 30
 ```
 
-### 3. Schedule Playbook Chapters by Week
+### 3. Schedule .NET Tips for Specific Dates
+
+Schedule .NET-specific posts using the `dotnet_scheduled` section:
+
+```json
+{
+  "dotnet_scheduled": {
+    "2026-05-10": ["Entity Framework Core query optimization with Claude Code"],
+    "2026-05-11": [
+      "generating xUnit and integration tests with Claude Code",
+      "Clean Architecture patterns in .NET with Claude Code"
+    ]
+  }
+}
+```
+
+**How it works:**
+- Same format as general `scheduled` (supports single string or array)
+- Runs `python scripts/generate_dotnet_post.py` to generate posts in `_posts/dotnet/`
+- Tracks uniqueness in `dotnet_used_topics`
+- Auto-selects from `dotnet_available_topics` if not scheduled
+- Can have multiple posts per day (just like general posts)
+
+### 4. Schedule Java Tips for Specific Dates
+
+Schedule Java-specific posts using the `java_scheduled` section:
+
+```json
+{
+  "java_scheduled": {
+    "2026-05-12": ["Claude Code for Spring Boot REST API development"],
+    "2026-05-13": [
+      "generating JUnit 5 tests with Mockito and Claude Code",
+      "refactoring Java microservices with Claude Code"
+    ]
+  }
+}
+```
+
+**How it works:**
+- Same format as general `scheduled` (supports single string or array)
+- Runs `python scripts/generate_java_post.py` to generate posts in `_posts/java/`
+- Tracks uniqueness in `java_used_topics`
+- Auto-selects from `java_available_topics` if not scheduled
+- Can have multiple posts per day
+
+### 5. Schedule Playbook Chapters by Week
 
 Schedule playbook chapters using the `playbook_scheduled` section:
 

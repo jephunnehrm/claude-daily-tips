@@ -1,6 +1,8 @@
 import os
 import time
 import glob
+import json
+import random
 import requests
 import urllib.parse
 from datetime import datetime
@@ -13,39 +15,78 @@ ALLOWED_TAGS = {
     'git', 'automation', 'mcp', 'agents', 'azure',
 }
 
-topics = [
-    "Claude Code for ASP.NET Core minimal APIs",
-    "scaffolding Blazor components with Claude Code",
-    "Entity Framework Core query optimization with Claude Code",
-    "generating xUnit and integration tests with Claude Code",
-    "Clean Architecture patterns in .NET with Claude Code",
-    "MAUI cross-platform app development with Claude Code",
-    "SignalR real-time feature scaffolding with Claude Code",
-    "dependency injection patterns in .NET with Claude Code",
-    "Polly resilience and retry policies with Claude Code",
-    "OpenTelemetry tracing in ASP.NET Core with Claude Code",
-    "NuGet package management and updates with Claude Code",
-    "LINQ query refactoring with Claude Code",
-    "ASP.NET Core middleware pipeline with Claude Code",
-    "Dapper micro-ORM patterns with Claude Code",
-    "background services and hosted workers in .NET with Claude Code",
-    "gRPC service development in .NET with Claude Code",
-    "health checks and readiness probes in ASP.NET Core",
-    "feature flags with Microsoft.FeatureManagement and Claude Code",
-    "rate limiting and throttling in ASP.NET Core with Claude Code",
-    "minimal API endpoint organisation patterns with Claude Code",
-]
-
 today = datetime.now()
 date_str = today.strftime('%Y-%m-%d')
 
 os.makedirs('_posts/dotnet', exist_ok=True)
-existing = glob.glob(f"_posts/dotnet/{date_str}-*.md")
-if existing:
-    print(f"✅ .NET post for {date_str} already exists — skipping.")
-    exit(0)
 
-topic = topics[today.timetuple().tm_yday % len(topics)]
+# Load topics from JSON file
+topics_file = "topics.json"
+if not os.path.exists(topics_file):
+    raise FileNotFoundError(f"Missing {topics_file}. Please create it with available topics.")
+
+with open(topics_file, 'r') as f:
+    topics_config = json.load(f)
+
+# Check if topic is scheduled for today
+topic = None
+if date_str in topics_config.get('dotnet_scheduled', {}):
+    scheduled_topics = topics_config['dotnet_scheduled'][date_str]
+    # Handle both single string and list of topics
+    if isinstance(scheduled_topics, str):
+        scheduled_list = [scheduled_topics]
+    else:
+        scheduled_list = scheduled_topics if scheduled_topics else []
+
+    # Find first scheduled topic that doesn't have a post yet
+    existing_posts = glob.glob(f"_posts/dotnet/{date_str}-*.md")
+    existing_slugs = set()
+    for post in existing_posts:
+        slug = post.split('-', 4)[4].rsplit('.', 1)[0]
+        existing_slugs.add(slug)
+
+    for sched_topic in scheduled_list:
+        test_slug = ''.join(c if c.isalnum() or c == '-' else '-' for c in sched_topic.lower().replace(' ', '-'))[:50].rstrip('-')
+        if test_slug not in existing_slugs:
+            topic = sched_topic
+            print(f"Using scheduled .NET topic for {date_str}: {topic}")
+            break
+
+    if not topic and existing_posts:
+        print(f"✅ All scheduled .NET topics for {date_str} already have posts — skipping.")
+        exit(0)
+    elif not topic:
+        raise ValueError(f"No valid topics scheduled for {date_str}")
+
+else:
+    # Check if any post exists for today
+    existing = glob.glob(f"_posts/dotnet/{date_str}-*.md")
+    if existing:
+        print(f"✅ .NET post for {date_str} already exists — skipping.")
+        exit(0)
+
+    # Pick a random unused topic
+    available = topics_config.get('dotnet_available_topics', [])
+    used = set(topics_config.get('dotnet_used_topics', []))
+    unused_topics = [t for t in available if t not in used]
+
+    if not unused_topics:
+        # All topics used, reset the used list
+        print("⚠️ All .NET topics used, resetting for new cycle")
+        unused_topics = available
+        used = set()
+
+    topic = random.choice(unused_topics)
+    print(f"Generated random .NET topic for {date_str}: {topic}")
+
+    # Add to used topics
+    used.add(topic)
+    topics_config['dotnet_used_topics'] = sorted(list(used))
+
+    # Save updated config
+    with open(topics_file, 'w') as f:
+        json.dump(topics_config, f, indent=2)
+    print(f"Updated {topics_file} with used .NET topic")
 
 url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key={GEMINI_API_KEY}"
 

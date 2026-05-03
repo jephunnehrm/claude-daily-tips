@@ -1,6 +1,8 @@
 import os
 import time
 import glob
+import json
+import random
 import requests
 import urllib.parse
 from datetime import datetime
@@ -13,39 +15,78 @@ ALLOWED_TAGS = {
     'git', 'automation', 'agents',
 }
 
-topics = [
-    "Claude Code for Spring Boot REST API development",
-    "generating JUnit 5 tests with Mockito and Claude Code",
-    "Spring Data JPA query optimisation with Claude Code",
-    "refactoring Java microservices with Claude Code",
-    "Gradle build script automation with Claude Code",
-    "Maven dependency management with Claude Code",
-    "Spring Security configuration patterns with Claude Code",
-    "Hibernate entity mapping and relationships with Claude Code",
-    "Spring Boot actuator and observability with Claude Code",
-    "Java streams and functional programming with Claude Code",
-    "Docker containerisation for Spring Boot with Claude Code",
-    "Spring Cloud Config and microservice configuration",
-    "Lombok and MapStruct code generation with Claude Code",
-    "OpenAPI specification generation in Spring Boot with Claude Code",
-    "Spring Batch processing pipelines with Claude Code",
-    "reactive programming with Spring WebFlux and Claude Code",
-    "Testcontainers integration testing with Claude Code",
-    "Spring Cache abstraction patterns with Claude Code",
-    "Java design patterns accelerated by Claude Code",
-    "Flyway database migrations with Claude Code",
-]
-
 today = datetime.now()
 date_str = today.strftime('%Y-%m-%d')
 
 os.makedirs('_posts/java', exist_ok=True)
-existing = glob.glob(f"_posts/java/{date_str}-*.md")
-if existing:
-    print(f"✅ Java post for {date_str} already exists — skipping.")
-    exit(0)
 
-topic = topics[today.timetuple().tm_yday % len(topics)]
+# Load topics from JSON file
+topics_file = "topics.json"
+if not os.path.exists(topics_file):
+    raise FileNotFoundError(f"Missing {topics_file}. Please create it with available topics.")
+
+with open(topics_file, 'r') as f:
+    topics_config = json.load(f)
+
+# Check if topic is scheduled for today
+topic = None
+if date_str in topics_config.get('java_scheduled', {}):
+    scheduled_topics = topics_config['java_scheduled'][date_str]
+    # Handle both single string and list of topics
+    if isinstance(scheduled_topics, str):
+        scheduled_list = [scheduled_topics]
+    else:
+        scheduled_list = scheduled_topics if scheduled_topics else []
+
+    # Find first scheduled topic that doesn't have a post yet
+    existing_posts = glob.glob(f"_posts/java/{date_str}-*.md")
+    existing_slugs = set()
+    for post in existing_posts:
+        slug = post.split('-', 4)[4].rsplit('.', 1)[0]
+        existing_slugs.add(slug)
+
+    for sched_topic in scheduled_list:
+        test_slug = ''.join(c if c.isalnum() or c == '-' else '-' for c in sched_topic.lower().replace(' ', '-'))[:50].rstrip('-')
+        if test_slug not in existing_slugs:
+            topic = sched_topic
+            print(f"Using scheduled Java topic for {date_str}: {topic}")
+            break
+
+    if not topic and existing_posts:
+        print(f"✅ All scheduled Java topics for {date_str} already have posts — skipping.")
+        exit(0)
+    elif not topic:
+        raise ValueError(f"No valid topics scheduled for {date_str}")
+
+else:
+    # Check if any post exists for today
+    existing = glob.glob(f"_posts/java/{date_str}-*.md")
+    if existing:
+        print(f"✅ Java post for {date_str} already exists — skipping.")
+        exit(0)
+
+    # Pick a random unused topic
+    available = topics_config.get('java_available_topics', [])
+    used = set(topics_config.get('java_used_topics', []))
+    unused_topics = [t for t in available if t not in used]
+
+    if not unused_topics:
+        # All topics used, reset the used list
+        print("⚠️ All Java topics used, resetting for new cycle")
+        unused_topics = available
+        used = set()
+
+    topic = random.choice(unused_topics)
+    print(f"Generated random Java topic for {date_str}: {topic}")
+
+    # Add to used topics
+    used.add(topic)
+    topics_config['java_used_topics'] = sorted(list(used))
+
+    # Save updated config
+    with open(topics_file, 'w') as f:
+        json.dump(topics_config, f, indent=2)
+    print(f"Updated {topics_file} with used Java topic")
 
 url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key={GEMINI_API_KEY}"
 
