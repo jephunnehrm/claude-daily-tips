@@ -1,8 +1,15 @@
 {
   "scheduled": {
-    "2026-05-03": "Claude Code for documentation generation",
-    "2026-05-04": "advanced MCP server patterns",
-    "2026-05-05": "optimizing Claude Code performance"
+    "2026-05-03": [
+      "Claude Code for documentation generation"
+    ],
+    "2026-05-04": [
+      "advanced MCP server patterns",
+      "another topic for same day"
+    ],
+    "2026-05-05": [
+      "optimizing Claude Code performance"
+    ]
   },
   "used_topics": [
     "Claude Code CLI installation and setup",

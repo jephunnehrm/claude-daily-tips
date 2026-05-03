@@ -18,11 +18,6 @@ ALLOWED_TAGS = {
 today = datetime.now()
 date_str = today.strftime('%Y-%m-%d')
 
-existing = glob.glob(f"_posts/{date_str}-*.md")
-if existing:
-    print(f"✅ Post for {date_str} already exists: {existing[0]} — skipping.")
-    exit(0)
-
 # Load topics from JSON file
 topics_file = "topics.json"
 if not os.path.exists(topics_file):
@@ -32,10 +27,44 @@ with open(topics_file, 'r') as f:
     topics_config = json.load(f)
 
 # Check if topic is scheduled for today
+topic = None
 if date_str in topics_config.get('scheduled', {}):
-    topic = topics_config['scheduled'][date_str]
-    print(f"Using scheduled topic for {date_str}: {topic}")
+    scheduled_topics = topics_config['scheduled'][date_str]
+    # Handle both single string and list of topics
+    if isinstance(scheduled_topics, str):
+        scheduled_list = [scheduled_topics]
+    else:
+        scheduled_list = scheduled_topics if scheduled_topics else []
+
+    # Find first scheduled topic that doesn't have a post yet
+    existing_posts = glob.glob(f"_posts/{date_str}-*.md")
+    existing_slugs = set()
+    for post in existing_posts:
+        # Extract slug from filename: _posts/YYYY-MM-DD-slug.md
+        slug = post.split('-', 4)[4].rsplit('.', 1)[0]
+        existing_slugs.add(slug)
+
+    for sched_topic in scheduled_list:
+        # Generate slug for this topic to check if post exists
+        test_slug = ''.join(c if c.isalnum() or c == '-' else '-' for c in sched_topic.lower().replace(' ', '-'))[:50].rstrip('-')
+        if test_slug not in existing_slugs:
+            topic = sched_topic
+            print(f"Using scheduled topic for {date_str}: {topic}")
+            break
+
+    if not topic and existing_posts:
+        print(f"✅ All scheduled topics for {date_str} already have posts — skipping.")
+        exit(0)
+    elif not topic:
+        raise ValueError(f"No valid topics scheduled for {date_str}")
+
 else:
+    # Check if any post exists for today
+    existing = glob.glob(f"_posts/{date_str}-*.md")
+    if existing:
+        print(f"✅ Post for {date_str} already exists: {existing[0]} — skipping.")
+        exit(0)
+
     # Pick a random unused topic
     available = topics_config.get('available_topics', [])
     used = set(topics_config.get('used_topics', []))
