@@ -42,7 +42,7 @@ if date_str in topics_config.get('java_scheduled', {}):
     existing_posts = glob.glob(f"_posts/java/{date_str}-*.md")
     existing_slugs = set()
     for post in existing_posts:
-        slug = post.split('-', 4)[4].rsplit('.', 1)[0]
+        slug = post.split('-', 3)[3].rsplit('.', 1)[0]
         existing_slugs.add(slug)
 
     for sched_topic in scheduled_list:
