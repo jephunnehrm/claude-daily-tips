@@ -1,6 +1,7 @@
 import os
 import time
 import glob
+import json
 import requests
 import urllib.parse
 from datetime import datetime
@@ -104,14 +105,47 @@ series_rotation = [
     },
 ]
 
-series_index = week_number % len(series_rotation)
-series = series_rotation[series_index]
-topic_index = (week_number // len(series_rotation)) % len(series["topics"])
-topic = series["topics"][topic_index]
-series_id = series["id"]
-series_name = series["name"]
-
 week_str = f"week{week_number}"
+
+# Load topics from JSON file for scheduling
+topics_file = "topics.json"
+playbook_scheduled = {}
+if os.path.exists(topics_file):
+    with open(topics_file, 'r') as f:
+        topics_config = json.load(f)
+    playbook_scheduled = topics_config.get('playbook_scheduled', {})
+
+# Check if this week has a scheduled chapter
+topic = None
+series = None
+series_id = None
+series_name = None
+
+if week_str in playbook_scheduled:
+    scheduled = playbook_scheduled[week_str]
+    series_id = scheduled.get('series_id')
+    topic = scheduled.get('topic')
+
+    # Find the series definition
+    for s in series_rotation:
+        if s['id'] == series_id:
+            series = s
+            series_name = s['name']
+            break
+
+    if not series or not topic:
+        raise ValueError(f"Invalid scheduled chapter for {week_str}: {scheduled}")
+
+    print(f"📖 Using scheduled chapter for {week_str}")
+else:
+    # Fall back to default rotation
+    series_index = week_number % len(series_rotation)
+    series = series_rotation[series_index]
+    topic_index = (week_number // len(series_rotation)) % len(series["topics"])
+    topic = series["topics"][topic_index]
+    series_id = series["id"]
+    series_name = series["name"]
+
 existing_week = glob.glob(f"_playbook/{series_id}-{week_str}-*.md")
 if existing_week:
     print(f"✅ Chapter for week {week_number} already exists — skipping.")

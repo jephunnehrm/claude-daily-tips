@@ -11,6 +11,12 @@
       "optimizing Claude Code performance"
     ]
   },
+  "playbook_scheduled": {
+    "week18": {
+      "series_id": "foundations",
+      "topic": "Claude Code installation, setup and first project walkthrough"
+    }
+  },
   "used_topics": [
     "Claude Code CLI installation and setup",
     "navigating Claude Code slash commands",

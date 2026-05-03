@@ -20,16 +20,39 @@ The post generation system now supports:
     "2026-05-03": ["topic 1", "topic 2"],
     "2026-05-04": ["single topic for this day"]
   },
+  "playbook_scheduled": {
+    "week18": {
+      "series_id": "foundations",
+      "topic": "Claude Code installation, setup and first project walkthrough"
+    },
+    "week19": {
+      "series_id": "mcp-deep-dive",
+      "topic": "MCP architecture — how servers, clients and tools connect"
+    }
+  },
   "used_topics": ["topic already generated", "another used topic"],
   "available_topics": ["all possible topics to choose from"]
 }
 ```
 
-**Note:** `scheduled` topics can be:
-- A **string** (single topic): `"2026-05-03": "specific topic"`
-- An **array** (multiple topics): `"2026-05-03": ["topic 1", "topic 2"]`
+**Sections:**
+- `scheduled`: Daily posts (supports single string or array of topics)
+- `playbook_scheduled`: Weekly playbook chapters (series_id + topic)
+- `used_topics`: Tracks generated daily topics for uniqueness
+- `available_topics`: All possible daily post topics
 
 ## How to Use
+
+### 0. Available Playbook Series
+
+The playbook has these series available:
+- `foundations` - Claude Code Foundations (6 topics)
+- `mcp-deep-dive` - MCP Deep Dive (6 topics)
+- `agent-pipelines` - Agent Pipelines and Orchestration (6 topics)
+- `dotnet-and-claude` - .NET and Claude Code (6 topics)
+- `azure-ai-integration` - Azure AI Integration (6 topics)
+- `patterns-and-architecture` - AI Patterns and Architecture (6 topics)
+- `java-and-claude` - Java and Claude Code (6 topics)
 
 ### 1. Schedule Topics for Specific Dates
 
@@ -110,6 +133,38 @@ Output: Warns "All topics used, resetting for new cycle"
         Resets used_topics to empty
         Picks a random topic from all 30
 ```
+
+### 3. Schedule Playbook Chapters by Week
+
+Schedule playbook chapters using the `playbook_scheduled` section:
+
+```json
+{
+  "playbook_scheduled": {
+    "week18": {
+      "series_id": "foundations",
+      "topic": "Claude Code installation, setup and first project walkthrough"
+    },
+    "week19": {
+      "series_id": "mcp-deep-dive",
+      "topic": "MCP architecture — how servers, clients and tools connect"
+    },
+    "week20": {
+      "series_id": "agent-pipelines",
+      "topic": "Multi-agent pipeline design — orchestrator and sub-agent patterns"
+    }
+  }
+}
+```
+
+**How it works:**
+- Key: `weekN` where N is the ISO week number (e.g., `week18`, `week52`)
+- Value: Object with `series_id` and `topic`
+- If a week is scheduled, that chapter is generated instead of using the default rotation
+- If not scheduled, the script uses the default weekly rotation system
+
+**Finding available topics:**
+Check the series definitions in each series to see all available topics, then copy the exact topic text.
 
 ## Multiple Posts Per Day
 
