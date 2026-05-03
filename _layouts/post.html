@@ -35,6 +35,45 @@ layout: default
   <div class="post-body">
     {{ content }}
   </div>
+
+  <!-- Article Navigation -->
+  <nav class="post-navigation">
+    {% if page.previous %}
+    <a href="{{ page.previous.url | prepend: site.baseurl }}" class="nav-link nav-previous">
+      <span class="nav-arrow">←</span>
+      <div class="nav-content">
+        <span class="nav-label">Previous</span>
+        <span class="nav-title">{{ page.previous.title }}</span>
+      </div>
+    </a>
+    {% else %}
+    <div class="nav-link nav-previous disabled">
+      <span class="nav-arrow">←</span>
+      <div class="nav-content">
+        <span class="nav-label">Previous</span>
+        <span class="nav-title">No previous article</span>
+      </div>
+    </div>
+    {% endif %}
+
+    {% if page.next %}
+    <a href="{{ page.next.url | prepend: site.baseurl }}" class="nav-link nav-next">
+      <div class="nav-content">
+        <span class="nav-label">Next</span>
+        <span class="nav-title">{{ page.next.title }}</span>
+      </div>
+      <span class="nav-arrow">→</span>
+    </a>
+    {% else %}
+    <div class="nav-link nav-next disabled">
+      <div class="nav-content">
+        <span class="nav-label">Next</span>
+        <span class="nav-title">No next article</span>
+      </div>
+      <span class="nav-arrow">→</span>
+    </div>
+    {% endif %}
+  </nav>
 </article>
 
 <style>
@@ -133,4 +172,90 @@ layout: default
   }
 
   .post-body a { color: #7c3aed; text-decoration: underline; }
+
+  /* Article Navigation */
+  .post-navigation {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e5e7eb;
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background: #f9fafb;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s ease;
+  }
+
+  .nav-link:not(.disabled):hover {
+    background: #f3f0ff;
+    border-color: #7c3aed;
+    box-shadow: 0 2px 8px rgba(124, 58, 237, 0.1);
+  }
+
+  .nav-link.disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  .nav-arrow {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    color: #7c3aed;
+  }
+
+  .nav-content {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .nav-label {
+    font-size: 0.7rem;
+    color: #9ca3af;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+
+  .nav-title {
+    font-size: 0.9rem;
+    color: #111827;
+    font-weight: 500;
+    line-height: 1.3;
+    word-break: break-word;
+    margin-top: 0.2rem;
+  }
+
+  .nav-previous {
+    text-align: left;
+  }
+
+  .nav-next {
+    text-align: right;
+    flex-direction: row-reverse;
+  }
+
+  @media(max-width: 599px) {
+    .post-navigation {
+      grid-template-columns: 1fr;
+    }
+
+    .nav-link {
+      padding: 0.75rem;
+    }
+
+    .nav-title {
+      font-size: 0.85rem;
+    }
+  }
 </style>
