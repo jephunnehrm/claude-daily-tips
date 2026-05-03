@@ -1,6 +1,8 @@
 import os
 import time
 import glob
+import json
+import random
 import requests
 import urllib.parse
 from datetime import datetime
@@ -13,26 +15,6 @@ ALLOWED_TAGS = {
     'dotnet', 'git', 'automation', 'devtools', 'java', 'spring', 'junit',
 }
 
-topics = [
-    "Claude Code CLI installation and setup", "navigating Claude Code slash commands",
-    "building MCP servers from scratch", "connecting MCP tools to Claude Code",
-    "writing effective CLAUDE.md files", "multi-agent pipelines with Claude Code",
-    "using Claude Code for code reviews", "Claude Code git workflow automation",
-    "debugging faster with Claude Code", "Claude Code context window management",
-    "parallel Claude Code sessions with git worktrees", "Claude Code for refactoring legacy code",
-    "Claude Code sub-agents and orchestration", "MCP server for database querying",
-    "Claude Code for test generation", "using Claude Code hooks",
-    "Claude Code for API integration", "MCP filesystem and shell tools",
-    "Claude Code project scaffolding", "monitoring Claude Code token usage",
-    "Claude Code for .NET and C# development", "MCP tools for Azure DevOps",
-    "Claude Code headless and CI mode", "custom slash commands in Claude Code",
-    "Claude Code for documentation generation",
-    "Claude Code for Spring Boot development",
-    "generating JUnit 5 tests with Claude Code",
-    "refactoring Java microservices with Claude Code",
-    "Claude Code for Gradle and Maven workflows",
-]
-
 today = datetime.now()
 date_str = today.strftime('%Y-%m-%d')
 
@@ -41,7 +23,41 @@ if existing:
     print(f"✅ Post for {date_str} already exists: {existing[0]} — skipping.")
     exit(0)
 
-topic = topics[today.timetuple().tm_yday % len(topics)]
+# Load topics from JSON file
+topics_file = "topics.json"
+if not os.path.exists(topics_file):
+    raise FileNotFoundError(f"Missing {topics_file}. Please create it with available topics.")
+
+with open(topics_file, 'r') as f:
+    topics_config = json.load(f)
+
+# Check if topic is scheduled for today
+if date_str in topics_config.get('scheduled', {}):
+    topic = topics_config['scheduled'][date_str]
+    print(f"Using scheduled topic for {date_str}: {topic}")
+else:
+    # Pick a random unused topic
+    available = topics_config.get('available_topics', [])
+    used = set(topics_config.get('used_topics', []))
+    unused_topics = [t for t in available if t not in used]
+
+    if not unused_topics:
+        # All topics used, reset the used list
+        print("⚠️ All topics used, resetting for new cycle")
+        unused_topics = available
+        used = set()
+
+    topic = random.choice(unused_topics)
+    print(f"Generated random topic for {date_str}: {topic}")
+
+    # Add to used topics
+    used.add(topic)
+    topics_config['used_topics'] = sorted(list(used))
+
+    # Save updated config
+    with open(topics_file, 'w') as f:
+        json.dump(topics_config, f, indent=2)
+    print(f"Updated {topics_file} with used topic")
 
 url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key={GEMINI_API_KEY}"
 
