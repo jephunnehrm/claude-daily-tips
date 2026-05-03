@@ -1,0 +1,137 @@
+{
+  "scheduled": {
+    "2026-05-03": [
+      "Claude Code for documentation generation",
+      "Best way to minimize token in claude code and maximize the output"
+    ],
+    "2026-05-04": [
+      "advanced MCP server patterns",
+      "Writing MCP server in .NET and RAG to generate mssql query based on NL"
+    ],
+    "2026-05-05": [
+      "optimizing Claude Code performance"
+    ],
+    "2026-05-06": [
+      "Difference between git worktree, normal claude skill worktree and claude superpowers worktree",
+      ".NET Core Entity vs DTO vs ViewModel that dev should know"
+    ],
+    "2026-05-07": [
+      "What would be the future of Agentic AI and how does software dev role evolves",
+      ".NET Core Result Pattern and avoid Exception overuse"
+    ],
+    "2026-05-08":[
+      "When do we use claude code rules and why it matters",
+      ".NET Core Guard Clauses for cleaner method bodies"
+    ],
+    "2026-05-09":[
+      "When do we use MCP and when do we use RAG",
+      "How do we integrate AI in our API feature such as IAM in .Net"
+    ]
+  },
+  "used_topics": [
+    "Claude Code CLI installation and setup",
+    "navigating Claude Code slash commands",
+    "building MCP servers from scratch",
+    "connecting MCP tools to Claude Code",
+    "writing effective CLAUDE.md files",
+    "multi-agent pipelines with Claude Code",
+    "using Claude Code for code reviews",
+    "Claude Code git workflow automation",
+    "debugging faster with Claude Code",
+    "Claude Code context window management",
+    "parallel Claude Code sessions with git worktrees",
+    "Claude Code for refactoring legacy code",
+    "Claude Code sub-agents and orchestration",
+    "MCP server for database querying",
+    "Claude Code for test generation",
+    "using Claude Code hooks",
+    "Claude Code for API integration",
+    "MCP filesystem and shell tools",
+    "Claude Code project scaffolding",
+    "monitoring Claude Code token usage",
+    "Claude Code for .NET and C# development",
+    "MCP tools for Azure DevOps",
+    "Claude Code headless and CI mode",
+    "custom slash commands in Claude Code"
+  ],
+  "available_topics": [
+    "Claude Code CLI installation and setup",
+    "navigating Claude Code slash commands",
+    "building MCP servers from scratch",
+    "connecting MCP tools to Claude Code",
+    "writing effective CLAUDE.md files",
+    "multi-agent pipelines with Claude Code",
+    "using Claude Code for code reviews",
+    "Claude Code git workflow automation",
+    "debugging faster with Claude Code",
+    "Claude Code context window management",
+    "parallel Claude Code sessions with git worktrees",
+    "Claude Code for refactoring legacy code",
+    "Claude Code sub-agents and orchestration",
+    "MCP server for database querying",
+    "Claude Code for test generation",
+    "using Claude Code hooks",
+    "Claude Code for API integration",
+    "MCP filesystem and shell tools",
+    "Claude Code project scaffolding",
+    "monitoring Claude Code token usage",
+    "Claude Code for .NET and C# development",
+    "MCP tools for Azure DevOps",
+    "Claude Code headless and CI mode",
+    "custom slash commands in Claude Code",
+    "Claude Code for documentation generation",
+    "Claude Code for Spring Boot development",
+    "generating JUnit 5 tests with Claude Code",
+    "refactoring Java microservices with Claude Code",
+    "Claude Code for Gradle and Maven workflows"
+  ],
+  "dotnet_scheduled": {},
+  "dotnet_available_topics": [
+    "Claude Code for ASP.NET Core minimal APIs",
+    "scaffolding Blazor components with Claude Code",
+    "Entity Framework Core query optimization with Claude Code",
+    "generating xUnit and integration tests with Claude Code",
+    "Clean Architecture patterns in .NET with Claude Code",
+    "MAUI cross-platform app development with Claude Code",
+    "SignalR real-time feature scaffolding with Claude Code",
+    "dependency injection patterns in .NET with Claude Code",
+    "Polly resilience and retry policies with Claude Code",
+    "OpenTelemetry tracing in ASP.NET Core with Claude Code",
+    "NuGet package management and updates with Claude Code",
+    "LINQ query refactoring with Claude Code",
+    "ASP.NET Core middleware pipeline with Claude Code",
+    "Dapper micro-ORM patterns with Claude Code",
+    "background services and hosted workers in .NET with Claude Code",
+    "gRPC service development in .NET with Claude Code",
+    "health checks and readiness probes in ASP.NET Core",
+    "feature flags with Microsoft.FeatureManagement and Claude Code",
+    "rate limiting and throttling in ASP.NET Core with Claude Code",
+    "minimal API endpoint organisation patterns with Claude Code"
+  ],
+  "dotnet_used_topics": [],
+  "java_scheduled": {},
+  "java_available_topics": [
+    "Claude Code for Spring Boot REST API development",
+    "generating JUnit 5 tests with Mockito and Claude Code",
+    "Spring Data JPA query optimisation with Claude Code",
+    "refactoring Java microservices with Claude Code",
+    "Gradle build script automation with Claude Code",
+    "Maven dependency management with Claude Code",
+    "Spring Security configuration patterns with Claude Code",
+    "Hibernate entity mapping and relationships with Claude Code",
+    "Spring Boot actuator and observability with Claude Code",
+    "Java streams and functional programming with Claude Code",
+    "Docker containerisation for Spring Boot with Claude Code",
+    "Spring Cloud Config and microservice configuration",
+    "Lombok and MapStruct code generation with Claude Code",
+    "OpenAPI specification generation in Spring Boot with Claude Code",
+    "Spring Batch processing pipelines with Claude Code",
+    "reactive programming with Spring WebFlux and Claude Code",
+    "Testcontainers integration testing with Claude Code",
+    "Spring Cache abstraction patterns with Claude Code",
+    "Java design patterns accelerated by Claude Code",
+    "Flyway database migrations with Claude Code"
+  ],
+  "java_used_topics": [],
+  "playbook_scheduled": {}
+}
