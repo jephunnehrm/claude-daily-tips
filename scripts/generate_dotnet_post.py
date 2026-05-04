@@ -194,11 +194,7 @@ image_prompt = parsed.get('image_prompt', 'dark C# dotnet code terminal purple d
 slug = ''.join(c if c.isalnum() or c == '-' else '-' for c in title.lower().replace(' ', '-'))[:50].rstrip('-')
 filename = f"_posts/dotnet/{date_str}-{slug}.md"
 
-try:
-    image_url = download_and_save_image(image_prompt, 'dotnet', date_str, slug)
-except Exception as e:
-    print(f"❌ Critical error: Could not download image: {e}")
-    raise
+image_url = download_and_save_image(image_prompt, 'dotnet', date_str, slug)
 
 tags_yaml = '\n'.join([f'  - {t}' for t in tags_list])
 

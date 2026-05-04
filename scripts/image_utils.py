@@ -1,10 +1,13 @@
 import os
+import time
 import requests
 import urllib.parse
 from typing import Optional
 
 
 DEFAULT_IMAGE_PATH = "assets/images/placeholder.jpg"
+MAX_RETRIES = 5
+INITIAL_BACKOFF = 2  # seconds
 
 
 def download_and_save_image(
@@ -16,7 +19,8 @@ def download_and_save_image(
 ) -> str:
     """
     Download image from Pollination AI and save locally.
-    Returns local path if successful, raises exception if it fails.
+    Retries up to MAX_RETRIES times on failure with exponential backoff.
+    Returns local path if successful, or placeholder path if all retries fail.
 
     Args:
         prompt: Image generation prompt
@@ -26,10 +30,7 @@ def download_and_save_image(
         timeout: Request timeout in seconds
 
     Returns:
-        Local image path (relative) suitable for markdown
-
-    Raises:
-        Exception: If image download fails
+        Local image path (relative) suitable for markdown, or placeholder on failure
     """
     os.makedirs("assets/images", exist_ok=True)
 
@@ -40,35 +41,43 @@ def download_and_save_image(
     )
 
     print("🖼️ Downloading image from Pollination AI...")
-    try:
-        img_response = requests.get(pollinations_url, timeout=timeout)
 
-        if img_response.status_code != 200:
-            raise Exception(
-                f"HTTP {img_response.status_code}: {img_response.reason}"
-            )
+    for attempt in range(MAX_RETRIES):
+        try:
+            img_response = requests.get(pollinations_url, timeout=timeout)
 
-        content_type = img_response.headers.get("content-type", "")
-        if not content_type.startswith("image/"):
-            raise Exception(
-                f"Invalid content type: {content_type} (expected image/*)"
-            )
+            if img_response.status_code != 200:
+                raise Exception(
+                    f"HTTP {img_response.status_code}: {img_response.reason}"
+                )
 
-        # Build local filename
-        if prefix:
-            img_filename = f"assets/images/{prefix}-{date_str}-{slug}.jpg"
-        else:
-            img_filename = f"assets/images/{date_str}-{slug}.jpg"
+            content_type = img_response.headers.get("content-type", "")
+            if not content_type.startswith("image/"):
+                raise Exception(
+                    f"Invalid content type: {content_type} (expected image/*)"
+                )
 
-        # Save to disk
-        with open(img_filename, "wb") as f:
-            f.write(img_response.content)
+            # Build local filename
+            if prefix:
+                img_filename = f"assets/images/{prefix}-{date_str}-{slug}.jpg"
+            else:
+                img_filename = f"assets/images/{date_str}-{slug}.jpg"
 
-        image_url = f"/claude-daily-tips/{img_filename}"
-        print(f"✅ Image saved locally: {img_filename}")
-        return image_url
+            # Save to disk
+            with open(img_filename, "wb") as f:
+                f.write(img_response.content)
 
-    except requests.RequestException as e:
-        raise Exception(f"Request failed: {e}")
-    except Exception as e:
-        raise Exception(f"Image download failed: {e}")
+            image_url = f"/claude-daily-tips/{img_filename}"
+            print(f"✅ Image saved locally: {img_filename}")
+            return image_url
+
+        except (requests.RequestException, Exception) as e:
+            if attempt < MAX_RETRIES - 1:
+                backoff = INITIAL_BACKOFF * (2 ** attempt)
+                print(f"⚠️ Download failed (attempt {attempt + 1}/{MAX_RETRIES}): {type(e).__name__}")
+                print(f"   Retrying in {backoff}s...")
+                time.sleep(backoff)
+            else:
+                print(f"❌ Image download failed after {MAX_RETRIES} attempts: {e}")
+                print(f"   Using placeholder image — will retry next run")
+                return DEFAULT_IMAGE_PATH
