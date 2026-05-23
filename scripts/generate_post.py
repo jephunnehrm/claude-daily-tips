@@ -7,6 +7,10 @@ import requests
 import urllib.parse
 from datetime import datetime
 from image_utils import download_and_save_image
+from article_utils import (
+    load_published_titles, is_duplicate, classify_type,
+    existing_titles_snippet, banned_openers_instruction, build_frontmatter,
+)
 
 GEMINI_API_KEY = os.environ['GEMINI_API_KEY']
 
@@ -90,6 +94,8 @@ else:
 
 url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key={GEMINI_API_KEY}"
 
+published_titles = load_published_titles()
+
 prompt = f"""You are an expert Claude Code and MCP (Model Context Protocol) developer advocate with deep hands-on experience.
 Write a practical daily tip for software developers about: {topic}.
 
@@ -101,14 +107,26 @@ CRITICAL ACCURACY RULES — follow these exactly:
 - If unsure whether a flag, env var, or API exists, do not include it — omit or describe the concept instead.
 - Code examples must be complete and copy-pasteable, not illustrative stubs.
 
+TITLE RULES (mandatory):
+- {banned_openers_instruction()}
+- Your title MUST be clearly different from every title in the "Already published" list below.
+- Frame the title around a specific problem or concrete outcome, not a vague category.
+
+ARTICLE TYPE — choose exactly one: how-to | deep-dive | comparison | troubleshooting | real-world
+
 The tip must:
 - Open with a real developer pain point or workflow moment (not "Claude Code lets you...")
-- Include one complete, copy-pasteable code block, config snippet, or CLI command sequence that actually works
+- Include one complete, copy-pasteable code block, config snippet, or CLI command sequence
+- Name at least one limitation or edge case (the "gotcha")
 - Include a "**Try it:**" line with one concrete action the reader can take right now
 - Be 4-5 substantial paragraphs — enough to actually teach the concept, not just tease it
 
+Already published (do NOT produce a title similar to any of these):
+{existing_titles_snippet(published_titles)}
+
 Respond in exactly this format with no extra text:
-TITLE: [catchy developer-focused title, max 60 chars]
+TITLE: [specific problem/outcome title, max 60 chars, not starting with a banned opener]
+TYPE: [how-to|deep-dive|comparison|troubleshooting|real-world]
 SUMMARY: [one sentence showing the developer benefit, max 120 chars]
 CONTENT: [4-5 paragraphs in markdown as described above, with code block and Try it line]
 TAGS: [3-5 comma separated tags from: claude-code, mcp, productivity, cli, agents, dotnet, git, automation, devtools, java, spring, junit]
@@ -121,7 +139,7 @@ def parse_response(text):
     current_key = None
     current_lines = []
     for line in text.split('\n'):
-        for key in ['TITLE', 'SUMMARY', 'CONTENT', 'TAGS', 'IMAGE_PROMPT']:
+        for key in ['TITLE', 'TYPE', 'SUMMARY', 'CONTENT', 'TAGS', 'IMAGE_PROMPT']:
             if line.startswith(f'{key}:'):
                 if current_key:
                     parsed[current_key] = '\n'.join(current_lines).strip()
@@ -136,13 +154,16 @@ def parse_response(text):
     return parsed
 
 
-def validate_parsed(parsed):
+def validate_parsed(parsed, published: list[str]):
     for key in ['title', 'summary', 'content', 'tags']:
         if not parsed.get(key, '').strip():
             return False, f"missing required field: {key}"
     word_count = len(parsed['content'].split())
     if word_count < 150:
         return False, f"content too short ({word_count} words, need 150+)"
+    dup, reason = is_duplicate(parsed['title'], published)
+    if dup:
+        return False, f"duplicate title — {reason}"
     return True, None
 
 
@@ -172,7 +193,7 @@ for attempt in range(MAX_RETRIES):
     text = data['candidates'][0]['content']['parts'][0]['text'].strip()
     print(f"Generated text preview: {text[:200]}")
     parsed = parse_response(text)
-    valid, error = validate_parsed(parsed)
+    valid, error = validate_parsed(parsed, published_titles)
 
     if valid:
         print("✅ Validation passed")
@@ -186,6 +207,7 @@ for attempt in range(MAX_RETRIES):
 
 
 title = parsed.get('title', f'Claude Tip {today.strftime("%B %d")}')
+article_type = parsed.get('type', classify_type(title)).strip().lower()
 summary = parsed.get('summary', '')
 content = parsed.get('content', '')
 tags_list = normalize_tags(parsed.get('tags', 'claude-code'))
@@ -201,16 +223,9 @@ except Exception as e:
     raise
 
 tags_yaml = '\n'.join([f'  - {t}' for t in tags_list])
+frontmatter = build_frontmatter(title, date_str, article_type, summary, image_url, tags_yaml)
 
-post = f"""---
-layout: post
-title: "{title}"
-date: {date_str}
-summary: "{summary}"
-image: "{image_url}"
-tags:
-{tags_yaml}
----
+post = f"""{frontmatter}
 
 
 
