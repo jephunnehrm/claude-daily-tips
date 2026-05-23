@@ -2,6 +2,7 @@
 layout: post
 title: "Ditch Boilerplate JUnit with Claude Code"
 date: 2026-05-21
+type: how-to
 summary: "Effortlessly generate JUnit 5 tests for your Java code and reclaim valuable development time."
 image: "/claude-daily-tips/assets/images/2026-05-21-ditch-boilerplate-junit-with-claude-code.jpg"
 tags:

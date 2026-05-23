@@ -2,6 +2,7 @@
 layout: post
 title: "Tame Your Build Dependencies with Claude Code"
 date: 2026-05-11
+type: how-to
 summary: "Automate dependency updates and security checks in your Gradle/Maven projects using Claude Code hooks."
 image: "/claude-daily-tips/assets/images/2026-05-11-tame-your-build-dependencies-with-claude-code.jpg"
 tags:

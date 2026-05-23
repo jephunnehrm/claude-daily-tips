@@ -2,6 +2,7 @@
 layout: post
 title: "Auto-Generate Unit Tests with Claude Code"
 date: 2026-04-24
+type: how-to
 summary: "Save hours of testing time by letting Claude Code generate comprehensive unit tests for your code."
 image: "/claude-daily-tips/assets/images/2026-04-24-auto-generate-unit-tests-with-claude-code.jpg"
 tags:

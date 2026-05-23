@@ -2,6 +2,7 @@
 layout: post
 title: "Slice and Dice Your Code for Max Context"
 date: 2026-04-19
+type: deep-dive
 summary: "Keep Claude focused on what matters by strategically including only relevant code sections, improving accuracy and reducing token costs."
 image: "/claude-daily-tips/assets/images/2026-04-19-slice-and-dice-your-code-for-max-context.jpg"
 tags:

@@ -2,6 +2,7 @@
 layout: post
 title: "Docs Dreading? Automate with Claude Code"
 date: 2026-05-10
+type: troubleshooting
 summary: "Ditch repetitive documentation tasks and generate accurate API summaries effortlessly with Claude Code."
 image: "/claude-daily-tips/assets/images/2026-05-10-docs-dreading--automate-with-claude-code.jpg"
 tags:

@@ -2,6 +2,7 @@
 layout: post
 title: "Scaffolding SignalR with Claude Code"
 date: 2026-05-08
+type: how-to
 summary: "Quickly generate boilerplate SignalR code using Claude Code, saving time and reducing manual setup."
 image: "/claude-daily-tips/assets/images/dotnet-2026-05-08-scaffolding-signalr-with-claude-code.jpg"
 tags:

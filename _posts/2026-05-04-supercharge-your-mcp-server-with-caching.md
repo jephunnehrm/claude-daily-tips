@@ -2,6 +2,7 @@
 layout: post
 title: "Supercharge Your MCP Server with Caching"
 date: 2026-05-04
+type: deep-dive
 summary: "Reduce latency and resource load by implementing a server-side caching strategy with MCP."
 image: "/claude-daily-tips/assets/images/2026-05-04-supercharge-your-mcp-server-with-caching.jpg"
 tags:

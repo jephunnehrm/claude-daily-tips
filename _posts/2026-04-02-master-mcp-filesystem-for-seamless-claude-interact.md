@@ -2,6 +2,7 @@
 layout: post
 title: "Master MCP Filesystem for Seamless Claude Interactions"
 date: 2026-04-02
+type: how-to
 summary: "Leverage MCP's filesystem features to organize and access your code efficiently for Claude Code."
 image: "https://image.pollinations.ai/prompt/Dark%2C%20glowing%20lines%20of%20code%20forming%20a%20complex%20directory%20structure%20in%20a%20terminal%2C%20digital%20art?width=800&height=400&nologo=true"
 tags:

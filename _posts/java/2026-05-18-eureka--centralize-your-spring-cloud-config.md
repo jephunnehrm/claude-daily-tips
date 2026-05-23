@@ -2,6 +2,7 @@
 layout: post
 title: "Eureka! Centralize Your Spring Cloud Config"
 date: 2026-05-18
+type: real-world
 summary: "Stop managing configuration scattered across microservices. Use Spring Cloud Config Server for centralized, Git-backed settings."
 image: "/claude-daily-tips/assets/images/java-2026-05-18-eureka--centralize-your-spring-cloud-config.jpg"
 tags:

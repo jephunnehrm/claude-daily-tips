@@ -2,6 +2,7 @@
 layout: post
 title: "Supercharge Minimal APIs with Claude Code"
 date: 2026-04-30
+type: how-to
 summary: "Effortlessly generate boilerplate and test cases for your ASP.NET Core minimal APIs, saving valuable development time."
 image: "https://image.pollinations.ai/prompt/Minimalist%20dark%20background%20with%20abstract%20glowing%20C%23%20code%20lines%20and%20gears%2C%20representing%20efficient%20.NET%20development?width=800&height=400&nologo=true&model=flux"
 tags:

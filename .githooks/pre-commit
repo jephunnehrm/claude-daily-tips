@@ -1,0 +1,46 @@
+#!/bin/sh
+# Pre-commit hook: blocks duplicate article titles before they land in the repo.
+# Install once with: git config core.hooksPath .githooks
+# Requires Python 3. Run `python scripts/check_duplicates.py` manually if Python unavailable.
+
+set -e
+
+# Only run when .md files inside _posts/ are being committed
+STAGED_POSTS=$(git diff --cached --name-only | grep "^_posts/.*\.md$" || true)
+[ -z "$STAGED_POSTS" ] && exit 0
+
+# Resolve python3 path
+PYTHON=$(command -v python3 2>/dev/null || command -v python 2>/dev/null || true)
+
+if [ -z "$PYTHON" ]; then
+    echo "[pre-commit] WARNING: Python not found — skipping duplicate title check."
+    echo "            Install Python 3 and re-run to enable this guard."
+    exit 0
+fi
+
+echo "[pre-commit] Checking staged articles for duplicate titles..."
+
+FAILED=0
+for FILE in $STAGED_POSTS; do
+    TITLE=$(grep "^title:" "$FILE" 2>/dev/null | head -1 | sed 's/title: //' | tr -d '"' || true)
+    [ -z "$TITLE" ] && continue
+
+    OUTPUT=$("$PYTHON" scripts/check_duplicates.py --title "$TITLE" 2>&1)
+    EXIT_CODE=$?
+
+    if [ $EXIT_CODE -ne 0 ]; then
+        echo ""
+        echo "[pre-commit] BLOCKED: $FILE"
+        echo "$OUTPUT"
+        FAILED=1
+    fi
+done
+
+if [ $FAILED -ne 0 ]; then
+    echo ""
+    echo "[pre-commit] Fix the issues above, then re-commit."
+    exit 1
+fi
+
+echo "[pre-commit] All article titles are unique. Proceeding."
+exit 0

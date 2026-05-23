@@ -2,6 +2,7 @@
 layout: post
 title: "Effortless DB Migrations with Flyway & Claude Code"
 date: 2026-05-19
+type: how-to
 summary: "Streamline your database schema evolution by generating SQL migration scripts with Claude Code, directly from your Spring Boot application."
 image: "/claude-daily-tips/assets/images/java-2026-05-19-effortless-db-migrations-with-flyway---claude-code.jpg"
 tags:

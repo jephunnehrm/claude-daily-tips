@@ -2,6 +2,7 @@
 layout: post
 title: "Turbocharge Legacy Code Refactoring"
 date: 2026-04-21
+type: how-to
 summary: "Leverage Claude Code's LLM power to identify and rewrite complex legacy code sections efficiently."
 image: "/claude-daily-tips/assets/images/2026-04-21-turbocharge-legacy-code-refactoring.jpg"
 tags:

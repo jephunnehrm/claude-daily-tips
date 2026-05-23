@@ -2,6 +2,7 @@
 layout: post
 title: "Automate Docs with Claude Code"
 date: 2026-05-18
+type: how-to
 summary: "Spend less time writing boilerplate documentation and more time coding with Claude Code's generation capabilities."
 image: "/claude-daily-tips/assets/images/2026-05-18-automate-docs-with-claude-code.jpg"
 tags:

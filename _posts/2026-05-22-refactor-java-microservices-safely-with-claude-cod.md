@@ -2,6 +2,7 @@
 layout: post
 title: "Refactor Java Microservices Safely with Claude Code"
 date: 2026-05-22
+type: real-world
 summary: "Reduce the risk of introducing bugs during Java microservice refactoring using Claude Code's guided analysis and suggestions."
 image: "/claude-daily-tips/assets/images/2026-05-22-refactor-java-microservices-safely-with-claude-cod.jpg"
 tags:

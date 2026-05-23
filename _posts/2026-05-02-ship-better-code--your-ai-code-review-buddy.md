@@ -2,6 +2,7 @@
 layout: post
 title: "Ship Better Code: Your AI Code Review Buddy"
 date: 2026-05-02
+type: how-to
 summary: "Leverage Claude Code to catch bugs and improve code quality before merging, saving valuable review time."
 image: "/claude-daily-tips/assets/images/2026-05-02-ship-better-code--your-ai-code-review-buddy.jpg"
 tags:

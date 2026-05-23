@@ -2,6 +2,7 @@
 layout: post
 title: "Leverage Claude Code Hooks for Smarter Git Commits"
 date: 2026-04-25
+type: how-to
 summary: "Automate commit message generation with Claude Code hooks, ensuring consistency and saving you time."
 image: "/claude-daily-tips/assets/images/2026-04-25-leverage-claude-code-hooks-for-smarter-git-commits.jpg"
 tags:

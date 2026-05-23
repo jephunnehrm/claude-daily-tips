@@ -2,6 +2,7 @@
 layout: post
 title: "MCP Server: Your Database Query Power-Up"
 date: 2026-04-23
+type: how-to
 summary: "Use the MCP server to seamlessly query your databases from Claude Code, boosting data-driven development speed."
 image: "/claude-daily-tips/assets/images/2026-04-23-mcp-server--your-database-query-power-up.jpg"
 tags:

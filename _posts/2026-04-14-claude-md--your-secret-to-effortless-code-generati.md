@@ -2,6 +2,7 @@
 layout: post
 title: "CLAUDE.md: Your Secret to Effortless Code Generation"
 date: 2026-04-14
+type: how-to
 summary: "Use CLAUDE.md files as rich, structured prompts to guide Claude Code for predictable and powerful code generation."
 image: "/claude-daily-tips/assets/images/2026-04-14-claude-md--your-secret-to-effortless-code-generati.jpg"
 tags:

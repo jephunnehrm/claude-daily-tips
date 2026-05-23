@@ -7,6 +7,10 @@ import requests
 import urllib.parse
 from datetime import datetime
 from image_utils import download_and_save_image
+from article_utils import (
+    load_published_titles, is_duplicate, classify_type,
+    existing_titles_snippet, banned_openers_instruction, build_frontmatter,
+)
 
 GEMINI_API_KEY = os.environ['GEMINI_API_KEY']
 
@@ -90,6 +94,8 @@ else:
 
 url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key={GEMINI_API_KEY}"
 
+published_titles = load_published_titles()
+
 prompt = f"""You are an expert Java developer advocate with deep hands-on experience in Spring Boot, Java, and Claude Code.
 Write a practical daily tip for Java developers about: {topic}.
 
@@ -99,14 +105,26 @@ CRITICAL ACCURACY RULES — follow these exactly:
 - Claude Code CLI command is `claude`. Only reference real, documented Claude Code features.
 - If unsure whether an API or annotation exists, describe the concept without fabricating specifics.
 
+TITLE RULES (mandatory):
+- {banned_openers_instruction()}
+- Your title MUST be clearly different from every title in the "Already published" list below.
+- Frame the title around a specific problem or concrete outcome, not a vague category.
+
+ARTICLE TYPE — choose exactly one: how-to | deep-dive | comparison | troubleshooting | real-world
+
 The tip must:
 - Open with a real Java developer pain point or workflow moment
-- Include one complete, copy-pasteable code block or CLI command sequence that actually works
+- Include one complete, copy-pasteable code block or CLI command sequence
+- Name at least one limitation or edge case (the "gotcha")
 - Include a "**Try it:**" line with one concrete action the reader can take right now
 - Be 4-5 substantial paragraphs — enough to actually teach the concept
 
+Already published (do NOT produce a title similar to any of these):
+{existing_titles_snippet(published_titles)}
+
 Respond in exactly this format with no extra text:
-TITLE: [catchy Java developer-focused title, max 60 chars]
+TITLE: [specific problem/outcome title, max 60 chars, not starting with a banned opener]
+TYPE: [how-to|deep-dive|comparison|troubleshooting|real-world]
 SUMMARY: [one sentence showing the developer benefit, max 120 chars]
 CONTENT: [4-5 paragraphs in markdown as described above, with code block and Try it line]
 TAGS: [3-5 comma separated tags from: java, spring, junit, claude-code, productivity, devtools, git, automation, agents]
@@ -119,7 +137,7 @@ def parse_response(text):
     current_key = None
     current_lines = []
     for line in text.split('\n'):
-        for key in ['TITLE', 'SUMMARY', 'CONTENT', 'TAGS', 'IMAGE_PROMPT']:
+        for key in ['TITLE', 'TYPE', 'SUMMARY', 'CONTENT', 'TAGS', 'IMAGE_PROMPT']:
             if line.startswith(f'{key}:'):
                 if current_key:
                     parsed[current_key] = '\n'.join(current_lines).strip()
@@ -134,13 +152,16 @@ def parse_response(text):
     return parsed
 
 
-def validate_parsed(parsed):
+def validate_parsed(parsed, published: list[str]):
     for key in ['title', 'summary', 'content', 'tags']:
         if not parsed.get(key, '').strip():
             return False, f"missing required field: {key}"
     word_count = len(parsed['content'].split())
     if word_count < 150:
         return False, f"content too short ({word_count} words, need 150+)"
+    dup, reason = is_duplicate(parsed['title'], published)
+    if dup:
+        return False, f"duplicate title — {reason}"
     return True, None
 
 
@@ -152,30 +173,62 @@ def normalize_tags(raw_tags):
     return valid if valid else ['java', 'claude-code']
 
 
+def call_gemini(prompt_text: str) -> str:
+    response = requests.post(url, json={"contents": [{"parts": [{"text": prompt_text}]}]})
+    data = response.json()
+    if 'candidates' not in data:
+        raise Exception(data.get('error', {}).get('message', str(data)))
+    return data['candidates'][0]['content']['parts'][0]['text'].strip()
+
+
+def critique_and_improve(draft: dict) -> str:
+    critique_prompt = f"""You are a senior Java developer relations editor reviewing an article draft.
+Evaluate the article below and rewrite the CONTENT section only to make it better.
+
+TITLE: {draft.get('title', '')}
+
+CURRENT CONTENT:
+{draft.get('content', '')}
+
+Check against these quality gates and fix any that fail:
+1. Does the opening sentence name a specific real Java developer pain point? (not "Claude Code lets you...")
+2. Is the Java or Spring Boot code example complete and compile-ready — real package names, real APIs, not stubs?
+3. Is there a concrete "gotcha" or limitation named — something that would surprise the reader?
+4. Does the article explain WHY the approach works, not just WHAT to type?
+5. Would a senior Java developer learn something they couldn't get from reading the Spring docs?
+
+Rewrite the content to pass all five gates. Keep the same length (4-5 paragraphs).
+Return ONLY the improved content in markdown — no labels, no commentary."""
+
+    return call_gemini(critique_prompt)
+
+
 MAX_RETRIES = 3
 parsed = {}
 
 for attempt in range(MAX_RETRIES):
     print(f"Calling Gemini API for Java tip (attempt {attempt + 1}/{MAX_RETRIES})...")
-    response = requests.post(url, json={"contents": [{"parts": [{"text": prompt}]}]})
-    print(f"Status: {response.status_code}")
-    data = response.json()
-
-    if 'candidates' not in data:
-        error_msg = data.get('error', {}).get('message', str(data))
+    try:
+        text = call_gemini(prompt)
+    except Exception as e:
         if attempt < MAX_RETRIES - 1:
-            print(f"API error, retrying: {error_msg}")
+            print(f"API error, retrying: {e}")
             time.sleep(5)
             continue
-        raise Exception(f"Gemini API error: {error_msg}")
+        raise
 
-    text = data['candidates'][0]['content']['parts'][0]['text'].strip()
     print(f"Generated text preview: {text[:200]}")
     parsed = parse_response(text)
-    valid, error = validate_parsed(parsed)
+    valid, error = validate_parsed(parsed, published_titles)
 
     if valid:
-        print("✅ Validation passed")
+        print("✅ Validation passed — running critique pass...")
+        try:
+            improved_content = critique_and_improve(parsed)
+            parsed['content'] = improved_content
+            print("✅ Critique pass complete")
+        except Exception as e:
+            print(f"⚠️ Critique pass failed (using original): {e}")
         break
 
     if attempt < MAX_RETRIES - 1:
@@ -186,6 +239,7 @@ for attempt in range(MAX_RETRIES):
 
 
 title = parsed.get('title', f'Java Tip {today.strftime("%B %d")}')
+article_type = parsed.get('type', classify_type(title)).strip().lower()
 summary = parsed.get('summary', '')
 content = parsed.get('content', '')
 tags_list = normalize_tags(parsed.get('tags', 'java'))
@@ -201,16 +255,9 @@ except Exception as e:
     raise
 
 tags_yaml = '\n'.join([f'  - {t}' for t in tags_list])
+frontmatter = build_frontmatter(title, date_str, article_type, summary, image_url, tags_yaml)
 
-post = f"""---
-layout: post
-title: "{title}"
-date: {date_str}
-summary: "{summary}"
-image: "{image_url}"
-tags:
-{tags_yaml}
----
+post = f"""{frontmatter}
 
 
 

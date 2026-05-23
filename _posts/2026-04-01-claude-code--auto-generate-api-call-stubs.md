@@ -2,6 +2,7 @@
 layout: post
 title: "Claude Code: Auto-Generate API Call Stubs"
 date: 2026-04-01
+type: how-to
 summary: "Speed up API integration by having Claude Code generate boilerplate for your API calls."
 image: "https://image.pollinations.ai/prompt/Dark%20abstract%20circuitry%20with%20glowing%20neon%20lines%20forming%20code%20snippets%20on%20a%20black%20background?width=800&height=400&nologo=true"
 tags:

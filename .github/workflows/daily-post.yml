@@ -49,6 +49,11 @@ jobs:
             echo "⏭️ Not Monday — skipping chapter generation"
           fi
 
+      - name: Validate generated articles
+        run: |
+          python scripts/check_duplicates.py
+          python scripts/check_frontmatter.py
+
       - name: Commit and push
         run: |
           git config user.name "Claude Tips Bot"

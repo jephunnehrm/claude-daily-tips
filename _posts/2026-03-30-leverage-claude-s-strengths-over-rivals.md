@@ -2,6 +2,7 @@
 layout: post
 title: "Leverage Claude's Strengths Over Rivals"
 date: 2026-03-30
+type: comparison
 summary: "Discover where Claude excels beyond other AI for nuanced tasks and content generation."
 image: "https://image.pollinations.ai/prompt/Abstract%20neural%20network%20connections%20glowing%20with%20ethical%20guidelines%2C%20digital%20art?width=800&height=400&nologo=true"
 tags:

@@ -2,6 +2,7 @@
 layout: post
 title: "Claude Code CLI: Quickstart Your Dev Workflow"
 date: 2026-04-10
+type: how-to
 summary: "Install Claude Code CLI in minutes to supercharge your coding with AI assistance directly in your terminal."
 image: "/claude-daily-tips/assets/images/2026-04-10-claude-code-cli--quickstart-your-dev-workflow.jpg"
 tags:

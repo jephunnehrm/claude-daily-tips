@@ -2,6 +2,7 @@
 layout: post
 title: "Streamline NuGet Updates with Claude Code Intelligence"
 date: 2026-05-18
+type: how-to
 summary: "Leverage Claude Code's understanding of your .NET project to intelligently manage NuGet package updates and prevent breaking changes."
 image: "/claude-daily-tips/assets/images/dotnet-2026-05-18-streamline-nuget-updates-with-claude-code-intellig.jpg"
 tags:

@@ -2,6 +2,7 @@
 layout: post
 title: "Turbocharge Test Writing with Claude Code"
 date: 2026-03-30
+type: how-to
 summary: "Generate comprehensive unit tests with Claude Code and MCP, saving hours and boosting code quality."
 image: "https://gen.pollinations.ai/image/Dark%20background%2C%20glowing%20lines%20of%20code%2C%20abstract%20network%20nodes%2C%20terminal%20interface%20aesthetic?width=800&height=400&nologo=true"
 tags:

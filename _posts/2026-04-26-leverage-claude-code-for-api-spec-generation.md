@@ -2,6 +2,7 @@
 layout: post
 title: "Leverage Claude Code for API Spec Generation"
 date: 2026-04-26
+type: how-to
 summary: "Streamline API integration by using Claude Code to auto-generate OpenAPI specs from your code."
 image: "/claude-daily-tips/assets/images/2026-04-26-leverage-claude-code-for-api-spec-generation.jpg"
 tags:

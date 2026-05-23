@@ -2,6 +2,7 @@
 layout: post
 title: "Streamline Spring Boot Docker Builds with Claude Code"
 date: 2026-05-14
+type: how-to
 summary: "Effortlessly generate Dockerfiles for your Spring Boot applications using Claude Code, saving valuable development time."
 image: "/claude-daily-tips/assets/images/java-2026-05-14-streamline-spring-boot-docker-builds-with-claude-c.jpg"
 tags:

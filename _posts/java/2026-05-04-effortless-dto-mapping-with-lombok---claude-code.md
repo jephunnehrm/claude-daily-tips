@@ -2,6 +2,7 @@
 layout: post
 title: "Effortless DTO Mapping with Lombok & Claude Code"
 date: 2026-05-04
+type: how-to
 summary: "Automate boilerplate DTO mapping and entity generation, significantly reducing manual coding and potential errors."
 image: "/claude-daily-tips/assets/images/java-2026-05-04-effortless-dto-mapping-with-lombok---claude-code.jpg"
 tags:

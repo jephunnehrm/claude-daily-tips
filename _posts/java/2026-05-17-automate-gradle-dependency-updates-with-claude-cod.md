@@ -2,6 +2,7 @@
 layout: post
 title: "Automate Gradle Dependency Updates with Claude Code"
 date: 2026-05-17
+type: how-to
 summary: "Effortlessly keep your Spring Boot project dependencies up-to-date using Claude Code for Gradle automation."
 image: "/claude-daily-tips/assets/images/java-2026-05-17-automate-gradle-dependency-updates-with-claude-cod.jpg"
 tags:

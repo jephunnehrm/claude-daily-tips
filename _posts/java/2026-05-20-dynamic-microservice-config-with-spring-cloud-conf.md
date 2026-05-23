@@ -2,6 +2,7 @@
 layout: post
 title: "Dynamic Microservice Config with Spring Cloud Config"
 date: 2026-05-20
+type: real-world
 summary: "Effortlessly manage microservice configurations externally, enabling dynamic updates without redeployments."
 image: "/claude-daily-tips/assets/images/java-2026-05-20-dynamic-microservice-config-with-spring-cloud-conf.jpg"
 tags:

@@ -2,6 +2,7 @@
 layout: post
 title: "Automate Your Code Reviews with MCP Hooks"
 date: 2026-04-29
+type: how-to
 summary: "Streamline code reviews by automatically triggering MCP tools when changes are committed."
 image: "/claude-daily-tips/assets/images/2026-04-29-automate-your-code-reviews-with-mcp-hooks.jpg"
 tags:

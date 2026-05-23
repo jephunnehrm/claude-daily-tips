@@ -2,6 +2,7 @@
 layout: post
 title: "Supercharge JUnit Tests with Claude Code & Mockito"
 date: 2026-05-21
+type: how-to
 summary: "Automate JUnit 5 test generation for your Spring Boot services using Mockito and Claude Code, saving valuable development time."
 image: "/claude-daily-tips/assets/images/java-2026-05-21-supercharge-junit-tests-with-claude-code---mockito.jpg"
 tags:

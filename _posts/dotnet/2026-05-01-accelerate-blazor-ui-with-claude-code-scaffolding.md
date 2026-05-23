@@ -2,6 +2,7 @@
 layout: post
 title: "Accelerate Blazor UI with Claude Code Scaffolding"
 date: 2026-05-01
+type: how-to
 summary: "Generate complex Blazor component code instantly with Claude Code, freeing you from repetitive UI construction."
 image: "https://image.pollinations.ai/prompt/Abstract%20dark%20background%20with%20glowing%20lines%20of%20C%23%20code%20and%20binary%20patterns%2C%20circuit%20board%20motif?width=800&height=400&nologo=true&model=flux"
 tags:

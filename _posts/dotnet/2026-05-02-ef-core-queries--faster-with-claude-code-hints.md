@@ -2,6 +2,7 @@
 layout: post
 title: "EF Core Queries: Faster with Claude Code Hints"
 date: 2026-05-02
+type: how-to
 summary: "Optimize Entity Framework Core queries by using Claude Code to intelligently suggest efficient LINQ translations."
 image: "https://image.pollinations.ai/prompt/Abstract%20dark%20blue%20circuit%20board%20with%20glowing%20green%20C%23%20code%20snippets%20and%20EF%20Core%20logos%2C%20digital%20art?width=800&height=400&nologo=true&model=flux"
 tags:

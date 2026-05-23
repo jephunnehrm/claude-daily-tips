@@ -2,6 +2,7 @@
 layout: post
 title: "Master Hibernate Relationships with Claude Code's Help"
 date: 2026-05-07
+type: how-to
 summary: "Effortlessly generate and refine Hibernate entity mappings for complex relationships, saving hours of manual coding."
 image: "/claude-daily-tips/assets/images/java-2026-05-07-master-hibernate-relationships-with-claude-code-s.jpg"
 tags:

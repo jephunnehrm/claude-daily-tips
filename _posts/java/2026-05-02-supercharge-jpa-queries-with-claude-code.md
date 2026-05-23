@@ -2,6 +2,7 @@
 layout: post
 title: "Supercharge JPA Queries with Claude Code"
 date: 2026-05-02
+type: how-to
 summary: "Automate query optimization and discover performance bottlenecks in your Spring Data JPA applications using Claude Code."
 image: "https://image.pollinations.ai/prompt/Dark%2C%20abstract%20representation%20of%20Java%20code%20flowing%20into%20a%20glowing%2C%20intelligent%20AI%20brain%2C%20circuit%20board%20patterns%2C%20subtle%20Spring%20Boot%20logo%20integration?width=800&height=400&nologo=true&model=flux"
 tags:

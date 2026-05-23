@@ -2,6 +2,7 @@
 layout: post
 title: "Supercharge ASP.NET Core Tracing with Claude Code"
 date: 2026-05-11
+type: how-to
 summary: "Effortlessly add OpenTelemetry tracing to your ASP.NET Core apps and inspect distributed calls with AI-powered insights."
 image: "/claude-daily-tips/assets/images/dotnet-2026-05-11-supercharge-asp-net-core-tracing-with-claude-code.jpg"
 tags:

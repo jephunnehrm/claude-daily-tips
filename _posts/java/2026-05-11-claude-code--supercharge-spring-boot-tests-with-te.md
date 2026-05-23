@@ -2,6 +2,7 @@
 layout: post
 title: "Claude Code: Supercharge Spring Boot Tests with Testcontainers"
 date: 2026-05-11
+type: how-to
 summary: "Effortlessly test Spring Boot applications against real databases and services using Claude Code and Testcontainers, boosting confidence in your integrations."
 image: "/claude-daily-tips/assets/images/java-2026-05-11-claude-code--supercharge-spring-boot-tests-with-te.jpg"
 tags:

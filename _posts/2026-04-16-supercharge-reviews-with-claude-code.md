@@ -2,6 +2,7 @@
 layout: post
 title: "Supercharge Reviews with Claude Code"
 date: 2026-04-16
+type: how-to
 summary: "Leverage Claude Code for faster, more insightful code reviews by focusing on specific improvement areas and generating targeted feedback."
 image: "/claude-daily-tips/assets/images/2026-04-16-supercharge-reviews-with-claude-code.jpg"
 tags:

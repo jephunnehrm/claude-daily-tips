@@ -2,6 +2,7 @@
 layout: post
 title: "Orchestrate Complex Tasks with Multi-Agent Pipelines"
 date: 2026-05-01
+type: how-to
 summary: "Break down large coding challenges into smaller, manageable steps orchestrated by Claude Code agents."
 image: "/claude-daily-tips/assets/images/2026-05-01-orchestrate-complex-tasks-with-multi-agent-pipelin.jpg"
 tags:

@@ -2,6 +2,7 @@
 layout: post
 title: "Effortless NuGet Updates with Claude Code"
 date: 2026-05-12
+type: how-to
 summary: "Streamline NuGet package management and updates, ensuring your .NET projects stay current and secure with AI assistance."
 image: "/claude-daily-tips/assets/images/dotnet-2026-05-12-effortless-nuget-updates-with-claude-code.jpg"
 tags:

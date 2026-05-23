@@ -2,6 +2,7 @@
 layout: post
 title: "Automate Code Review with Claude Code CI Mode"
 date: 2026-04-07
+type: how-to
 summary: "Integrate Claude Code into your CI pipeline for automated code quality checks and faster feedback loops."
 image: "/claude-daily-tips/assets/images/2026-04-07-automate-code-review-with-claude-code-ci-mode.jpg"
 tags:

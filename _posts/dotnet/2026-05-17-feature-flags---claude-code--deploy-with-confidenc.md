@@ -2,6 +2,7 @@
 layout: post
 title: "Feature Flags & Claude Code: Deploy with Confidence"
 date: 2026-05-17
+type: real-world
 summary: "Use feature flags in ASP.NET Core with Microsoft.FeatureManagement and Claude Code to safely roll out new features and manage deployments."
 image: "/claude-daily-tips/assets/images/dotnet-2026-05-17-feature-flags---claude-code--deploy-with-confidenc.jpg"
 tags:

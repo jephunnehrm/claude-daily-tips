@@ -2,6 +2,7 @@
 layout: post
 title: "JPA N+1: Claude Code to the Rescue!"
 date: 2026-05-09
+type: troubleshooting
 summary: "Eliminate wasteful N+1 query problems in Spring Data JPA by leveraging Claude Code's code generation capabilities."
 image: "/claude-daily-tips/assets/images/java-2026-05-09-jpa-n-1--claude-code-to-the-rescue.jpg"
 tags:

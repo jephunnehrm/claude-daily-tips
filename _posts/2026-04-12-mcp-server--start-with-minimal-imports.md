@@ -2,6 +2,7 @@
 layout: post
 title: "MCP Server: Start with Minimal Imports"
 date: 2026-04-12
+type: how-to
 summary: "Boost your MCP server startup by focusing only on essential imports for quicker iteration and cleaner code."
 image: "/claude-daily-tips/assets/images/2026-04-12-mcp-server--start-with-minimal-imports.jpg"
 tags:
