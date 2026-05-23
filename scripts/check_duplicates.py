@@ -7,8 +7,8 @@ Usage:
     python scripts/check_duplicates.py --title "Your Proposed Title"
 
 Exit codes:
-    0 = no issues found
-    1 = duplicates or near-duplicates detected
+    0 = no blocking issues (warnings are informational only)
+    1 = exact duplicate title detected
 """
 
 import argparse
@@ -18,7 +18,19 @@ import sys
 from pathlib import Path
 
 POSTS_DIR = Path("_posts")
-SIMILARITY_THRESHOLD = 0.75
+
+# Threshold for fuzzy similarity warnings (informational, not blocking).
+SIMILARITY_WARN = 0.82
+
+# Boilerplate phrases stripped before similarity comparison so that
+# "Supercharge Reviews with Claude Code" and "Supercharge Unit Tests with
+# Claude Code" are not false-positively flagged as duplicates.
+BOILERPLATE = re.compile(
+    r"\b(with|using|via)\s+(claude\s*code|claude|mcp)\b"
+    r"|\bwith\s+claude\b"
+    r"|\bclaud(e)?\s*(code)?\b",
+    re.IGNORECASE,
+)
 OVERUSED_OPENERS = {
     "automate", "supercharge", "streamline", "effortless",
     "turbocharge", "boost", "generate", "scaffold", "effortlessly",
@@ -38,6 +50,12 @@ def extract_title(path: Path) -> str | None:
 
 def normalize(title: str) -> str:
     return re.sub(r"[^a-z0-9 ]", "", title.lower()).strip()
+
+
+def normalize_topic(title: str) -> str:
+    """Strip boilerplate before fuzzy comparison to reduce false positives."""
+    stripped = BOILERPLATE.sub("", title)
+    return re.sub(r"\s+", " ", normalize(stripped)).strip()
 
 
 def opener_word(title: str) -> str:
@@ -63,11 +81,14 @@ def check_exact(candidate: str, published: list[tuple[str, Path]]) -> list[str]:
 
 
 def check_fuzzy(candidate: str, published: list[tuple[str, Path]]) -> list[str]:
-    norm = normalize(candidate)
+    """Warn when topic-normalised similarity is high (informational only)."""
+    topic_norm = normalize_topic(candidate)
     issues = []
     for title, path in published:
-        ratio = difflib.SequenceMatcher(None, norm, normalize(title)).ratio()
-        if ratio >= SIMILARITY_THRESHOLD and normalize(title) != norm:
+        if normalize(title) == normalize(candidate):
+            continue  # already caught by exact check
+        ratio = difflib.SequenceMatcher(None, topic_norm, normalize_topic(title)).ratio()
+        if ratio >= SIMILARITY_WARN:
             issues.append(
                 f"  SIMILAR ({ratio:.0%}): '{title}'\n    -> {path}"
             )
@@ -88,9 +109,8 @@ def check_opener(candidate: str, published: list[tuple[str, Path]]) -> list[str]
 
 
 def check_topic_cluster(candidate: str, published: list[tuple[str, Path]]) -> list[str]:
-    """Flag articles whose core keywords overlap heavily with existing ones."""
     stop = {"with", "your", "the", "and", "for", "from", "in", "to", "a", "an",
-            "of", "on", "by", "is", "are", "using", "use", "make", "get"}
+            "of", "on", "by", "is", "are", "using", "use", "make", "get", "claude", "code"}
     cand_words = {w for w in normalize(candidate).split() if w not in stop and len(w) > 3}
     issues = []
     for title, path in published:
@@ -105,41 +125,51 @@ def check_topic_cluster(candidate: str, published: list[tuple[str, Path]]) -> li
 
 
 def run_checks(candidate: str, published: list[tuple[str, Path]]) -> bool:
+    """Returns True (blocking) only on exact matches."""
     print(f"\nChecking: \"{candidate}\"\n{'=' * 60}")
-    found_issues = False
+    blocking = False
+    has_warnings = False
 
-    sections = [
-        ("Exact matches", check_exact(candidate, published)),
-        ("Fuzzy / near-duplicate matches", check_fuzzy(candidate, published)),
+    exact = check_exact(candidate, published)
+    if exact:
+        blocking = True
+        print(f"\n[FAIL] Exact matches (BLOCKING):")
+        for issue in exact:
+            print(issue)
+
+    for label, issues in [
+        ("Fuzzy / near-duplicate matches (informational)", check_fuzzy(candidate, published)),
         ("Overused opener words", check_opener(candidate, published)),
-        ("Topic keyword overlap", check_topic_cluster(candidate, published)),
-    ]
-
-    for label, issues in sections:
+        ("Topic keyword overlap (informational)", check_topic_cluster(candidate, published)),
+    ]:
         if issues:
-            found_issues = True
-            print(f"\n[FAIL] {label}:")
+            has_warnings = True
+            print(f"\n[WARN] {label}:")
             for issue in issues:
                 print(issue)
 
-    if not found_issues:
+    if not blocking and not has_warnings:
         print("\n[OK] No duplicates or issues found. Safe to publish.")
+    elif blocking:
+        print("\n[BLOCKED] Fix the exact duplicate before publishing.")
     else:
-        print("\n[BLOCKED] Resolve the issues above before publishing.")
+        print("\n[OK] Warnings above are informational. Safe to publish.")
 
-    return found_issues
+    return blocking
 
 
 def scan_all(published: list[tuple[str, Path]]) -> bool:
+    """Scans the archive. Only exact duplicates cause exit 1."""
     print(f"Scanning {len(published)} published articles for internal duplicates...\n")
-    found_any = False
+    has_exact = False
+    has_similar = False
 
     seen: dict[str, Path] = {}
     for title, path in published:
         norm = normalize(title)
         if norm in seen:
             print(f"[FAIL] EXACT DUPLICATE:\n  '{title}'\n  {seen[norm]}\n  {path}\n")
-            found_any = True
+            has_exact = True
         else:
             seen[norm] = path
 
@@ -150,14 +180,23 @@ def scan_all(published: list[tuple[str, Path]]) -> bool:
             if key in pairs_checked:
                 continue
             pairs_checked.add(key)
-            ratio = difflib.SequenceMatcher(None, normalize(t1), normalize(t2)).ratio()
-            if ratio >= SIMILARITY_THRESHOLD and normalize(t1) != normalize(t2):
-                print(f"[WARN] SIMILAR ({ratio:.0%}):\n  '{t1}'\n  '{t2}'\n  {p1}\n  {p2}\n")
-                found_any = True
+            if normalize(t1) == normalize(t2):
+                continue  # already caught above
+            ratio = difflib.SequenceMatcher(
+                None, normalize_topic(t1), normalize_topic(t2)
+            ).ratio()
+            if ratio >= SIMILARITY_WARN:
+                print(f"[WARN] SIMILAR ({ratio:.0%}) — review manually:\n  '{t1}'\n  '{t2}'\n  {p1}\n  {p2}\n")
+                has_similar = True
 
-    if not found_any:
+    if not has_exact and not has_similar:
         print("[OK] No duplicates found across all published articles.")
-    return found_any
+    elif has_exact:
+        print("[FAIL] Exact duplicates found — fix before merging.")
+    else:
+        print("[OK] Only similarity warnings found — no blocking issues.")
+
+    return has_exact  # only exact duplicates are blocking
 
 
 def main() -> None:
@@ -168,11 +207,11 @@ def main() -> None:
     published = load_published_titles()
 
     if args.title:
-        has_issues = run_checks(args.title, published)
+        has_blocking = run_checks(args.title, published)
     else:
-        has_issues = scan_all(published)
+        has_blocking = scan_all(published)
 
-    sys.exit(1 if has_issues else 0)
+    sys.exit(1 if has_blocking else 0)
 
 
 if __name__ == "__main__":

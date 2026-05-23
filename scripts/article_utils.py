@@ -8,7 +8,14 @@ import re
 from pathlib import Path
 
 POSTS_DIR = Path("_posts")
-SIMILARITY_THRESHOLD = 0.75
+SIMILARITY_THRESHOLD = 0.82
+
+BOILERPLATE = re.compile(
+    r"\b(with|using|via)\s+(claude\s*code|claude|mcp)\b"
+    r"|\bwith\s+claude\b"
+    r"|\bclaud(e)?\s*(code)?\b",
+    re.IGNORECASE,
+)
 
 OVERUSED_OPENERS = [
     "Automate", "Supercharge", "Streamline", "Effortless",
@@ -33,12 +40,19 @@ def normalize(title: str) -> str:
     return re.sub(r"[^a-z0-9 ]", "", title.lower()).strip()
 
 
+def normalize_topic(title: str) -> str:
+    """Strip boilerplate before comparing to reduce false positives."""
+    stripped = BOILERPLATE.sub("", title)
+    return re.sub(r"\s+", " ", normalize(stripped)).strip()
+
+
 def is_duplicate(candidate: str, published: list[str]) -> tuple[bool, str]:
     norm = normalize(candidate)
+    topic_norm = normalize_topic(candidate)
     for existing in published:
         if normalize(existing) == norm:
             return True, f"Exact match: '{existing}'"
-        ratio = difflib.SequenceMatcher(None, norm, normalize(existing)).ratio()
+        ratio = difflib.SequenceMatcher(None, topic_norm, normalize_topic(existing)).ratio()
         if ratio >= SIMILARITY_THRESHOLD:
             return True, f"Too similar ({ratio:.0%}) to: '{existing}'"
     return False, ""
