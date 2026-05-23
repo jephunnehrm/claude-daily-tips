@@ -2,6 +2,7 @@
 layout: post
 title: "Feature Flags for Safer Deployments with .NET"
 date: 2026-05-06
+type: real-world
 summary: "Effortlessly deploy new features by toggling them on/off without code changes using feature flags."
 image: "/claude-daily-tips/assets/images/dotnet-2026-05-06-feature-flags-for-safer-deployments-with--net.jpg"
 tags:

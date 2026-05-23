@@ -2,6 +2,7 @@
 layout: post
 title: "Spring Cache with Claude Code: Faster Dev Cycles"
 date: 2026-05-22
+type: how-to
 summary: "Supercharge your Spring Boot development by leveraging Claude Code to explore and optimize Spring Cache configurations for immediate performance gains."
 image: "/claude-daily-tips/assets/images/java-2026-05-22-spring-cache-with-claude-code--faster-dev-cycles.jpg"
 tags:

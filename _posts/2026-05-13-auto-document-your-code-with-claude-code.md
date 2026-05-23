@@ -2,6 +2,7 @@
 layout: post
 title: "Auto-Document Your Code with Claude Code"
 date: 2026-05-13
+type: how-to
 summary: "Quickly generate READMEs and API documentation from your codebase, saving hours of manual writing."
 image: "/claude-daily-tips/assets/images/2026-05-13-auto-document-your-code-with-claude-code.jpg"
 tags:

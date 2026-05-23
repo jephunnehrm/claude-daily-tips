@@ -2,6 +2,7 @@
 layout: post
 title: "Turbocharge JUnit 5 with Mockito & Claude Code"
 date: 2026-05-01
+type: how-to
 summary: "Effortlessly generate JUnit 5 test boilerplate for your Spring Boot services using Mockito and Claude Code for faster development cycles."
 image: "https://image.pollinations.ai/prompt/Futuristic%20dark-themed%20IDE%20showing%20complex%20Java%20Spring%20Boot%20code%20with%20glowing%20mock%20objects%20and%20AI%20code%20generation%20elements?width=800&height=400&nologo=true&model=flux"
 tags:

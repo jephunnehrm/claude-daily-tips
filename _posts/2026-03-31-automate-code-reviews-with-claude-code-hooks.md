@@ -2,6 +2,7 @@
 layout: post
 title: "Automate Code Reviews with Claude Code Hooks"
 date: 2026-03-31
+type: how-to
 summary: "Streamline your Git workflow by automatically triggering Claude Code analysis on commits, catching issues before they merge."
 image: "https://image.pollinations.ai/prompt/Dark%2C%20glowing%20terminal%20screen%20displaying%20complex%20code%20with%20integrated%20AI%20analysis%20lines%2C%20abstract%20tech%20patterns%2C%20no%20people?width=800&height=400&nologo=true"
 tags:

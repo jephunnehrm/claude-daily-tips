@@ -2,6 +2,7 @@
 layout: post
 title: "Streamline Maven Dependency Hell with Claude Code"
 date: 2026-05-13
+type: troubleshooting
 summary: "Quickly resolve transitive dependency conflicts and identify unused dependencies in your Spring Boot projects."
 image: "/claude-daily-tips/assets/images/java-2026-05-13-streamline-maven-dependency-hell-with-claude-code.jpg"
 tags:

@@ -2,6 +2,7 @@
 layout: post
 title: "MAUI Boilerplate Blues? Claude Code to the Rescue!"
 date: 2026-05-13
+type: troubleshooting
 summary: "Generate cross-platform MAUI UI with Claude Code and accelerate your C# app development workflow."
 image: "/claude-daily-tips/assets/images/dotnet-2026-05-13-maui-boilerplate-blues--claude-code-to-the-rescue.jpg"
 tags:

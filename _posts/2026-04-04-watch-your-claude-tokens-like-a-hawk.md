@@ -2,6 +2,7 @@
 layout: post
 title: "Watch Your Claude Tokens Like a Hawk!"
 date: 2026-04-04
+type: deep-dive
 summary: "Optimize your Claude Code and MCP usage by proactively tracking token consumption to avoid unexpected costs and delays."
 image: "/claude-daily-tips/assets/images/2026-04-04-watch-your-claude-tokens-like-a-hawk.jpg"
 tags:

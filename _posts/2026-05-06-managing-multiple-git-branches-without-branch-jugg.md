@@ -2,6 +2,7 @@
 layout: post
 title: "Managing Multiple Git Branches Without Branch Juggling"
 date: 2026-05-06
+type: real-world
 summary: "Efficiently work on concurrent tasks by leveraging Git worktrees alongside Claude Code's specialized environments."
 image: "/claude-daily-tips/assets/images/2026-05-06-managing-multiple-git-branches-without-branch-jugg.jpg"
 tags:

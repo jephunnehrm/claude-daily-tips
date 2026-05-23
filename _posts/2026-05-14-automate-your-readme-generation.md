@@ -2,6 +2,7 @@
 layout: post
 title: "Automate Your README Generation"
 date: 2026-05-14
+type: how-to
 summary: "Effortlessly create comprehensive documentation for your code with Claude Code's documentation generation capabilities."
 image: "/claude-daily-tips/assets/images/2026-05-14-automate-your-readme-generation.jpg"
 tags:

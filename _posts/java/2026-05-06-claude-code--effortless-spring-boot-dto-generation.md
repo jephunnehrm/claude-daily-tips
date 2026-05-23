@@ -2,6 +2,7 @@
 layout: post
 title: "Claude Code: Effortless Spring Boot DTO Generation"
 date: 2026-05-06
+type: how-to
 summary: "Automate DTO creation for your Spring Boot REST APIs, reducing boilerplate and ensuring consistency."
 image: "/claude-daily-tips/assets/images/java-2026-05-06-claude-code--effortless-spring-boot-dto-generation.jpg"
 tags:

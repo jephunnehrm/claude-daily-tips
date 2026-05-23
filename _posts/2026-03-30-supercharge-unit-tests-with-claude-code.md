@@ -2,6 +2,7 @@
 layout: post
 title: "Supercharge Unit Tests with Claude Code"
 date: 2026-03-30
+type: how-to
 summary: "Generate robust unit tests in seconds, reducing manual effort and improving code quality."
 image: "https://gen.pollinations.ai/image/Futuristic%20dark%20code%20terminal%20interface%20with%20glowing%20lines%20and%20abstract%20geometric%20patterns?width=800&height=400&nologo=true"
 tags:

@@ -2,6 +2,7 @@
 layout: post
 title: "MCP Filesystem: Smart Pathing for Claude Code"
 date: 2026-04-27
+type: how-to
 summary: "Use MCP's intelligent pathing to seamlessly reference files and directories from the command line within your Claude Code projects."
 image: "/claude-daily-tips/assets/images/2026-04-27-mcp-filesystem--smart-pathing-for-claude-code.jpg"
 tags:

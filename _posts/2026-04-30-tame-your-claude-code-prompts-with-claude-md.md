@@ -2,6 +2,7 @@
 layout: post
 title: "Tame Your Claude Code Prompts with CLAUDE.md"
 date: 2026-04-30
+type: how-to
 summary: "Organize and reuse complex Claude Code prompts efficiently with CLAUDE.md files for faster AI-assisted development."
 image: "/claude-daily-tips/assets/images/2026-04-30-tame-your-claude-code-prompts-with-claude-md.jpg"
 tags:

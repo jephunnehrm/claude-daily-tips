@@ -2,6 +2,7 @@
 layout: post
 title: "Effortless Blazor Component Scaffolding with Claude Code"
 date: 2026-05-10
+type: how-to
 summary: "Speed up Blazor development by generating reusable component code with Claude Code's intelligent scaffolding."
 image: "/claude-daily-tips/assets/images/dotnet-2026-05-10-effortless-blazor-component-scaffolding-with-claud.jpg"
 tags:

@@ -2,6 +2,7 @@
 layout: post
 title: "Polly Resilience for Robust API Calls"
 date: 2026-05-15
+type: how-to
 summary: "Enhance your .NET apps by automatically retrying failed HTTP requests using Polly, saving you manual error handling."
 image: "/claude-daily-tips/assets/images/dotnet-2026-05-15-polly-resilience-for-robust-api-calls.jpg"
 tags:

@@ -2,6 +2,7 @@
 layout: post
 title: "MCP vs. RAG: When to Choose Your Claude AI Assistant"
 date: 2026-05-09
+type: comparison
 summary: "Master the distinction between MCP for context-aware code generation and RAG for external knowledge integration."
 image: "/claude-daily-tips/assets/images/2026-05-09-mcp-vs--rag--when-to-choose-your-claude-ai-assista.jpg"
 tags:

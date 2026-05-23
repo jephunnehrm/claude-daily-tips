@@ -2,6 +2,7 @@
 layout: post
 title: "Claude Code: Instant Error Diagnosis"
 date: 2026-04-18
+type: troubleshooting
 summary: "Leverage Claude Code to get instant, actionable explanations for cryptic error messages, slashing debugging time."
 image: "/claude-daily-tips/assets/images/2026-04-18-claude-code--instant-error-diagnosis.jpg"
 tags:

@@ -2,6 +2,7 @@
 layout: post
 title: "Streamline Your Claude Code Prompts"
 date: 2026-05-05
+type: deep-dive
 summary: "Reduce Claude Code latency and improve response quality by being more specific in your requests."
 image: "/claude-daily-tips/assets/images/2026-05-05-streamline-your-claude-code-prompts.jpg"
 tags:

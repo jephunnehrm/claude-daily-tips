@@ -2,6 +2,7 @@
 layout: post
 title: "Boost Spring REST with Claude Code Refactoring"
 date: 2026-04-30
+type: how-to
 summary: "Automate tedious Spring Boot REST API code refactoring and generation with Claude Code for faster development."
 image: "https://image.pollinations.ai/prompt/Abstract%20glowing%20circuit%20board%20with%20intertwined%20Java%20and%20Spring%20logos%2C%20dark%20background%2C%20subtle%20digital%20rain%20effect?width=800&height=400&nologo=true&model=flux"
 tags:

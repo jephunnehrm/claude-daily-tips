@@ -2,6 +2,7 @@
 layout: post
 title: "Streamline NuGet Updates with Claude Code"
 date: 2026-05-14
+type: how-to
 summary: "Effortlessly manage and update your project's NuGet dependencies using Claude Code for a smoother development workflow."
 image: "/claude-daily-tips/assets/images/dotnet-2026-05-14-streamline-nuget-updates-with-claude-code.jpg"
 tags:

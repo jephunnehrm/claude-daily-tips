@@ -1,0 +1,40 @@
+name: Article Quality Check
+
+on:
+  pull_request:
+    paths:
+      - "_posts/**/*.md"
+  push:
+    branches:
+      - main
+    paths:
+      - "_posts/**/*.md"
+
+jobs:
+  duplicate-check:
+    name: Duplicate Title Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Scan for duplicate titles
+        run: python scripts/check_duplicates.py
+
+  frontmatter-check:
+    name: Frontmatter Completeness
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Check required frontmatter fields
+        run: python scripts/check_frontmatter.py

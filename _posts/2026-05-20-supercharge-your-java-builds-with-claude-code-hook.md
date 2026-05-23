@@ -2,6 +2,7 @@
 layout: post
 title: "Supercharge Your Java Builds with Claude Code Hooks"
 date: 2026-05-20
+type: how-to
 summary: "Automate repetitive build tasks and accelerate your Java development cycles in Gradle and Maven."
 image: "/claude-daily-tips/assets/images/2026-05-20-supercharge-your-java-builds-with-claude-code-hook.jpg"
 tags:

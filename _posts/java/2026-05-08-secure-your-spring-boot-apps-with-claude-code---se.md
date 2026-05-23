@@ -2,6 +2,7 @@
 layout: post
 title: "Secure Your Spring Boot Apps with Claude Code & Security DSLs"
 date: 2026-05-08
+type: how-to
 summary: "Simplify Spring Security config with Claude Code's intelligent code generation for common patterns."
 image: "/claude-daily-tips/assets/images/java-2026-05-08-secure-your-spring-boot-apps-with-claude-code---se.jpg"
 tags:

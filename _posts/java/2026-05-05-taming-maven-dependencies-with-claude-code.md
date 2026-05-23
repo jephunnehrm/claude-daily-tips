@@ -2,6 +2,7 @@
 layout: post
 title: "Taming Maven Dependencies with Claude Code"
 date: 2026-05-05
+type: how-to
 summary: "Effortlessly manage and update Maven dependencies in your Spring Boot projects using Claude Code for faster development."
 image: "/claude-daily-tips/assets/images/java-2026-05-05-taming-maven-dependencies-with-claude-code.jpg"
 tags:

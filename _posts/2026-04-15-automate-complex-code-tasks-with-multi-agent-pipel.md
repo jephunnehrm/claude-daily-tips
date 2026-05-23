@@ -2,6 +2,7 @@
 layout: post
 title: "Automate Complex Code Tasks with Multi-Agent Pipelines"
 date: 2026-04-15
+type: how-to
 summary: "Chain Claude Code agents together via MCP to tackle multi-step programming challenges with a single command."
 image: "/claude-daily-tips/assets/images/2026-04-15-automate-complex-code-tasks-with-multi-agent-pipel.jpg"
 tags:

@@ -2,6 +2,7 @@
 layout: post
 title: "Claude's Strengths: Know When to Deploy It"
 date: 2026-03-30
+type: comparison
 summary: "Leverage Claude's conversational fluency and analytical depth over specialized AI tools for complex, nuanced tasks."
 image: "https://image.pollinations.ai/prompt/Abstract%20neural%20network%20with%20flowing%20data%20streams%20and%20interconnected%20nodes.?width=800&height=400&nologo=true"
 tags:

@@ -2,6 +2,7 @@
 layout: post
 title: "EF Core Performance: Unlock Speed with Claude Code"
 date: 2026-05-05
+type: how-to
 summary: "Optimize your Entity Framework Core queries and boost application performance using intelligent code suggestions."
 image: "/claude-daily-tips/assets/images/dotnet-2026-05-05-ef-core-performance--unlock-speed-with-claude-code.jpg"
 tags:

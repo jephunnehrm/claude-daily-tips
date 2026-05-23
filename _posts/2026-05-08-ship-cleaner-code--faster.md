@@ -2,6 +2,7 @@
 layout: post
 title: "Ship Cleaner Code, Faster"
 date: 2026-05-08
+type: how-to
 summary: "Automate common code checks and refactorings with Claude Code rules for consistent, high-quality codebases."
 image: "/claude-daily-tips/assets/images/2026-05-08-ship-cleaner-code--faster.jpg"
 tags:

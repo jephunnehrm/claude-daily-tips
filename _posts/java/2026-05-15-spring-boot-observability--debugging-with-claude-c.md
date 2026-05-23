@@ -2,6 +2,7 @@
 layout: post
 title: "Spring Boot Observability: Debugging with Claude Code"
 date: 2026-05-15
+type: real-world
 summary: "Effortlessly debug your Spring Boot application's health and performance by integrating Actuator with Claude Code."
 image: "/claude-daily-tips/assets/images/java-2026-05-15-spring-boot-observability--debugging-with-claude-c.jpg"
 tags:

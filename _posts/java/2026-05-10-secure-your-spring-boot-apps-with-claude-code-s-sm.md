@@ -2,6 +2,7 @@
 layout: post
 title: "Secure Your Spring Boot Apps with Claude Code's Smart Config"
 date: 2026-05-10
+type: how-to
 summary: "Automate Spring Security setup and get instant, accurate configuration with Claude Code, saving you hours of debugging."
 image: "/claude-daily-tips/assets/images/java-2026-05-10-secure-your-spring-boot-apps-with-claude-code-s-sm.jpg"
 tags:

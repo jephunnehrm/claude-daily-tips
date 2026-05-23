@@ -2,6 +2,7 @@
 layout: post
 title: "Master MCP Server State with Scoped Context"
 date: 2026-05-04
+type: deep-dive
 summary: "Efficiently manage transient server state in MCP applications by leveraging scoped context for cleaner, more predictable logic."
 image: "/claude-daily-tips/assets/images/2026-05-04-master-mcp-server-state-with-scoped-context.jpg"
 tags:

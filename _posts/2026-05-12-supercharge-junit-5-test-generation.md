@@ -2,6 +2,7 @@
 layout: post
 title: "Supercharge JUnit 5 Test Generation"
 date: 2026-05-12
+type: how-to
 summary: "Effortlessly create robust JUnit 5 tests for your Java code with Claude Code, saving valuable development time."
 image: "/claude-daily-tips/assets/images/2026-05-12-supercharge-junit-5-test-generation.jpg"
 tags:

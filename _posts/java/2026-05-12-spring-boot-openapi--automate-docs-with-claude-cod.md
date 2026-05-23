@@ -2,6 +2,7 @@
 layout: post
 title: "Spring Boot OpenAPI: Automate Docs with Claude Code"
 date: 2026-05-12
+type: how-to
 summary: "Effortlessly generate your OpenAPI specifications directly from your Spring Boot application using Claude Code, saving you manual documentation time."
 image: "/claude-daily-tips/assets/images/java-2026-05-12-spring-boot-openapi--automate-docs-with-claude-cod.jpg"
 tags:

@@ -2,6 +2,7 @@
 layout: post
 title: "Generate Unit Tests with Claude Code in Seconds"
 date: 2026-03-30
+type: how-to
 summary: "Supercharge your testing by having Claude Code write unit tests, saving you time and improving code coverage."
 image: "https://image.pollinations.ai/prompt/Dark%20terminal%20screen%20with%20glowing%20green%20code%2C%20digital%20abstract%20patterns%2C%20futuristic%2C%20no%20people?width=800&height=400&nologo=true"
 tags:

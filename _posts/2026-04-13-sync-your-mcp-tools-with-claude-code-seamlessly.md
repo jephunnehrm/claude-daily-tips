@@ -2,6 +2,7 @@
 layout: post
 title: "Sync Your MCP Tools with Claude Code Seamlessly"
 date: 2026-04-13
+type: how-to
 summary: "Integrate your favorite MCP tools with Claude Code to automate tasks and boost your coding productivity."
 image: "/claude-daily-tips/assets/images/2026-04-13-sync-your-mcp-tools-with-claude-code-seamlessly.jpg"
 tags:

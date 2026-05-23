@@ -2,6 +2,7 @@
 layout: post
 title: "Automate JUnit 5 Test Generation"
 date: 2026-05-19
+type: how-to
 summary: "Spend less time writing boilerplate JUnit 5 tests and more time building features with Claude Code."
 image: "/claude-daily-tips/assets/images/2026-05-19-automate-junit-5-test-generation.jpg"
 tags:

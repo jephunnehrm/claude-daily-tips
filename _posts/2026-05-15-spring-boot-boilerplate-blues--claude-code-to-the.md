@@ -2,6 +2,7 @@
 layout: post
 title: "Spring Boot Boilerplate Blues? Claude Code to the Rescue!"
 date: 2026-05-15
+type: troubleshooting
 summary: "Automate repetitive Spring Boot setup and configuration tasks with Claude Code, freeing up your development time."
 image: "/claude-daily-tips/assets/images/2026-05-15-spring-boot-boilerplate-blues--claude-code-to-the.jpg"
 tags:

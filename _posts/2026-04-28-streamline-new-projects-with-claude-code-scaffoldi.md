@@ -2,6 +2,7 @@
 layout: post
 title: "Streamline New Projects with Claude Code Scaffolding"
 date: 2026-04-28
+type: how-to
 summary: "Jumpstart new projects quickly and consistently by leveraging Claude Code's powerful scaffolding capabilities."
 image: "/claude-daily-tips/assets/images/2026-04-28-streamline-new-projects-with-claude-code-scaffoldi.jpg"
 tags:

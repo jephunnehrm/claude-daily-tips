@@ -2,6 +2,7 @@
 layout: post
 title: "Effortless SignalR Scaffolding with Claude Code"
 date: 2026-05-19
+type: how-to
 summary: "Quickly add real-time SignalR functionality to your ASP.NET Core apps with Claude Code's intelligent scaffolding."
 image: "/claude-daily-tips/assets/images/dotnet-2026-05-19-effortless-signalr-scaffolding-with-claude-code.jpg"
 tags:

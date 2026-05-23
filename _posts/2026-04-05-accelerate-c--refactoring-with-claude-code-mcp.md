@@ -2,6 +2,7 @@
 layout: post
 title: "Accelerate C# Refactoring with Claude Code MCP"
 date: 2026-04-05
+type: how-to
 summary: "Use Claude Code MCP to quickly refactor your C# code, improving clarity and maintainability with minimal effort."
 image: "/claude-daily-tips/assets/images/2026-04-05-accelerate-c--refactoring-with-claude-code-mcp.jpg"
 tags:

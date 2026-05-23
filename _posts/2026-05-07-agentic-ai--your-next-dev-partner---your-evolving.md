@@ -2,6 +2,7 @@
 layout: post
 title: "Agentic AI: Your Next Dev Partner & Your Evolving Role"
 date: 2026-05-07
+type: deep-dive
 summary: "Prepare for AI agents to become your coding copilots, transforming your workflow and elevating your strategic input."
 image: "/claude-daily-tips/assets/images/2026-05-07-agentic-ai--your-next-dev-partner---your-evolving.jpg"
 tags:

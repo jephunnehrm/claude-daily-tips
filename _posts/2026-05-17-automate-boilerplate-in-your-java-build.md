@@ -2,6 +2,7 @@
 layout: post
 title: "Automate Boilerplate in Your Java Build"
 date: 2026-05-17
+type: how-to
 summary: "Quickly generate and integrate code snippets for Gradle and Maven projects, streamlining repetitive build tasks."
 image: "/claude-daily-tips/assets/images/2026-05-17-automate-boilerplate-in-your-java-build.jpg"
 tags:

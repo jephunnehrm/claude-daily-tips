@@ -2,6 +2,7 @@
 layout: post
 title: "Streamline LINQ with Claude Code Refactoring"
 date: 2026-05-09
+type: how-to
 summary: "Effortlessly improve complex LINQ queries in your C# code using intelligent AI-powered refactoring from Claude Code."
 image: "/claude-daily-tips/assets/images/dotnet-2026-05-09-streamline-linq-with-claude-code-refactoring.jpg"
 tags:

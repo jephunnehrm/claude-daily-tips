@@ -2,6 +2,7 @@
 layout: post
 title: "Parallel Claude Code & Git Worktrees"
 date: 2026-04-20
+type: real-world
 summary: "Boost your parallel development and Claude Code sessions by leveraging Git worktrees for isolated, context-rich coding environments."
 image: "/claude-daily-tips/assets/images/2026-04-20-parallel-claude-code---git-worktrees.jpg"
 tags:

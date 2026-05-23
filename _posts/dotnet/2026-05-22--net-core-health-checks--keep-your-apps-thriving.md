@@ -2,6 +2,7 @@
 layout: post
 title: ".NET Core Health Checks: Keep Your Apps Thriving"
 date: 2026-05-22
+type: how-to
 summary: "Ensure your ASP.NET Core applications are always healthy and responsive with built-in health checks and readiness probes."
 image: "/claude-daily-tips/assets/images/dotnet-2026-05-22--net-core-health-checks--keep-your-apps-thriving.jpg"
 tags:

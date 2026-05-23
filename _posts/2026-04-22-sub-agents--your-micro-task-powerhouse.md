@@ -2,6 +2,7 @@
 layout: post
 title: "Sub-Agents: Your Micro-Task Powerhouse"
 date: 2026-04-22
+type: deep-dive
 summary: "Delegate small, repeatable coding tasks to sub-agents for faster, more focused development cycles."
 image: "/claude-daily-tips/assets/images/2026-04-22-sub-agents--your-micro-task-powerhouse.jpg"
 tags:

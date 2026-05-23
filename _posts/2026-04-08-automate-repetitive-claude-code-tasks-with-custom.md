@@ -2,6 +2,7 @@
 layout: post
 title: "Automate Repetitive Claude Code Tasks with Custom Commands"
 date: 2026-04-08
+type: how-to
 summary: "Streamline your coding workflow by creating personalized slash commands for frequent Claude Code actions."
 image: "/claude-daily-tips/assets/images/2026-04-08-automate-repetitive-claude-code-tasks-with-custom.jpg"
 tags:

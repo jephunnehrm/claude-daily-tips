@@ -2,6 +2,7 @@
 layout: post
 title: "Automate Code Reviews with Claude & Git Hooks"
 date: 2026-04-17
+type: how-to
 summary: "Streamline your Git workflow by automatically generating PR summaries and flagging potential issues before human review."
 image: "/claude-daily-tips/assets/images/2026-04-17-automate-code-reviews-with-claude---git-hooks.jpg"
 tags:

@@ -2,6 +2,7 @@
 layout: post
 title: "Minimal API Madness? Organize with Claude Code!"
 date: 2026-05-07
+type: troubleshooting
 summary: "Tame your growing Minimal API endpoints by leveraging Claude Code for structured organization and discoverability."
 image: "/claude-daily-tips/assets/images/dotnet-2026-05-07-minimal-api-madness--organize-with-claude-code.jpg"
 tags:

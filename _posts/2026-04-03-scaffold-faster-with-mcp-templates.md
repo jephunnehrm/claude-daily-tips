@@ -2,6 +2,7 @@
 layout: post
 title: "Scaffold Faster with MCP Templates"
 date: 2026-04-03
+type: how-to
 summary: "Streamline new project setup and ensure consistency by leveraging MCP project scaffolding templates for Claude Code projects."
 image: "/claude-daily-tips/assets/images/2026-04-03-scaffold-faster-with-mcp-templates.jpg"
 tags:

@@ -2,6 +2,7 @@
 layout: post
 title: "Master Claude Code: Slash Commands Power-Up"
 date: 2026-04-11
+type: how-to
 summary: "Unlock faster coding and context recall with efficient Claude Code slash command usage."
 image: "/claude-daily-tips/assets/images/2026-04-11-master-claude-code--slash-commands-power-up.jpg"
 tags:

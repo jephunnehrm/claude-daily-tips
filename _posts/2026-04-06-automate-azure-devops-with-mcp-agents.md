@@ -2,6 +2,7 @@
 layout: post
 title: "Automate Azure DevOps with MCP Agents"
 date: 2026-04-06
+type: how-to
 summary: "Streamline your CI/CD pipelines by integrating MCP agents for automated code review and quality checks directly within Azure Pipelines."
 image: "/claude-daily-tips/assets/images/2026-04-06-automate-azure-devops-with-mcp-agents.jpg"
 tags:

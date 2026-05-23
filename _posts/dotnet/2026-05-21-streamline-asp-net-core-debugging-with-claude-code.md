@@ -2,6 +2,7 @@
 layout: post
 title: "Streamline ASP.NET Core Debugging with Claude Code"
 date: 2026-05-21
+type: how-to
 summary: "Instantly generate boilerplate ASP.NET Core middleware to accelerate debugging and development tasks."
 image: "/claude-daily-tips/assets/images/dotnet-2026-05-21-streamline-asp-net-core-debugging-with-claude-code.jpg"
 tags:

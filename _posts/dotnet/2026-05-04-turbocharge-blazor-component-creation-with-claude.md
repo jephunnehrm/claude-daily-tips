@@ -2,6 +2,7 @@
 layout: post
 title: "Turbocharge Blazor Component Creation with Claude Code"
 date: 2026-05-04
+type: how-to
 summary: "Quickly generate boilerplate Blazor components using Claude Code, saving time and reducing repetitive coding tasks for .NET developers."
 image: "/claude-daily-tips/assets/images/dotnet-2026-05-04-turbocharge-blazor-component-creation-with-claude.jpg"
 tags:
