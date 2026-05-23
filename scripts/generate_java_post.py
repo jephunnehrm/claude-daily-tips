@@ -173,30 +173,62 @@ def normalize_tags(raw_tags):
     return valid if valid else ['java', 'claude-code']
 
 
+def call_gemini(prompt_text: str) -> str:
+    response = requests.post(url, json={"contents": [{"parts": [{"text": prompt_text}]}]})
+    data = response.json()
+    if 'candidates' not in data:
+        raise Exception(data.get('error', {}).get('message', str(data)))
+    return data['candidates'][0]['content']['parts'][0]['text'].strip()
+
+
+def critique_and_improve(draft: dict) -> str:
+    critique_prompt = f"""You are a senior Java developer relations editor reviewing an article draft.
+Evaluate the article below and rewrite the CONTENT section only to make it better.
+
+TITLE: {draft.get('title', '')}
+
+CURRENT CONTENT:
+{draft.get('content', '')}
+
+Check against these quality gates and fix any that fail:
+1. Does the opening sentence name a specific real Java developer pain point? (not "Claude Code lets you...")
+2. Is the Java or Spring Boot code example complete and compile-ready — real package names, real APIs, not stubs?
+3. Is there a concrete "gotcha" or limitation named — something that would surprise the reader?
+4. Does the article explain WHY the approach works, not just WHAT to type?
+5. Would a senior Java developer learn something they couldn't get from reading the Spring docs?
+
+Rewrite the content to pass all five gates. Keep the same length (4-5 paragraphs).
+Return ONLY the improved content in markdown — no labels, no commentary."""
+
+    return call_gemini(critique_prompt)
+
+
 MAX_RETRIES = 3
 parsed = {}
 
 for attempt in range(MAX_RETRIES):
     print(f"Calling Gemini API for Java tip (attempt {attempt + 1}/{MAX_RETRIES})...")
-    response = requests.post(url, json={"contents": [{"parts": [{"text": prompt}]}]})
-    print(f"Status: {response.status_code}")
-    data = response.json()
-
-    if 'candidates' not in data:
-        error_msg = data.get('error', {}).get('message', str(data))
+    try:
+        text = call_gemini(prompt)
+    except Exception as e:
         if attempt < MAX_RETRIES - 1:
-            print(f"API error, retrying: {error_msg}")
+            print(f"API error, retrying: {e}")
             time.sleep(5)
             continue
-        raise Exception(f"Gemini API error: {error_msg}")
+        raise
 
-    text = data['candidates'][0]['content']['parts'][0]['text'].strip()
     print(f"Generated text preview: {text[:200]}")
     parsed = parse_response(text)
     valid, error = validate_parsed(parsed, published_titles)
 
     if valid:
-        print("✅ Validation passed")
+        print("✅ Validation passed — running critique pass...")
+        try:
+            improved_content = critique_and_improve(parsed)
+            parsed['content'] = improved_content
+            print("✅ Critique pass complete")
+        except Exception as e:
+            print(f"⚠️ Critique pass failed (using original): {e}")
         break
 
     if attempt < MAX_RETRIES - 1:
